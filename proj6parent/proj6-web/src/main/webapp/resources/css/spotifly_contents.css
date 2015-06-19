@@ -1,0 +1,121 @@
+@CHARSET "ISO-8859-1";
+
+/* link */
+a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+/* unvisited link */
+a:link {
+	
+}
+
+/* visited link */
+a:visited {
+	
+}
+
+/* mouse over link */
+a:hover {
+	color: #999;
+}
+
+/* selected link */
+a:active {
+	
+}
+
+#global_container input {
+	width: 100%;
+	font-family: spotifly_1;
+	color: #000;
+	border: none;
+	border-radius: 5px;
+	text-align: center;
+}
+
+#global_container input[type=submit] {
+	color: #fff;
+	background-color: #106800;
+}
+
+#global_container input:hover[type=submit] {
+	background-color: #0a3e00;
+}
+
+#global_container input:hover[type=text] {
+	background-color: #ddd;
+}
+
+#player {
+	display: table-cell;
+	height: 100%;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#player audio {
+	background-color: #106800;
+	border-radius: 5px;
+}
+
+#search {
+	float: left;
+	height: 100%;
+	line-height: 100%;
+	color: #fff;
+}
+
+#bottom {
+	float: left;
+	height: 100%;
+	line-height: 100%;
+	color: #fff;
+}
+
+#user_logout {
+	float: right;
+	height: 100%;
+	width: 250px;
+}
+
+#new_playlist {
+	padding-top: 50px;
+}
+
+#edit_user {
+	padding-top: 15px;
+}
+
+#edit_music {
+	padding-top: 50px;
+}
+
+#new_music {
+	padding-top: 50px;
+}
+
+#upload {
+	width: 100%;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+#upload:hover {
+	background-color: #ddd;
+}
+
+#uploadIn {
+	margin-left: -155px;
+}
+
+#global_container input[type=file] {
+	border: none;
+	color: #000;
+}
+
+#global_container input:hover[type=file] {
+}

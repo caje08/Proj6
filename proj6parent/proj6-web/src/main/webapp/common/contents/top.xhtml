@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+
+		<div id="search">
+			<h:form>
+				<table>
+					<tr>
+						<td><h:graphicImage library="images"
+								name="Spotifly_logo_small.png" /></td>
+
+						<td><label>Search:</label></td>
+
+						<td><h:inputText style="input_text"
+								value="#{activeSession.search}" /></td>
+
+						<td><h:commandButton action="#{activeSession.searchMusic()}"
+								value="Search" /></td>
+
+						<td><h:commandButton
+								action="#{activeSession.searchMusicByTrack()}"
+								value="Search by Track Title" /></td>
+
+						<td><h:commandButton
+								action="#{activeSession.searchMusicByArtist()}"
+								value="Search by Artist" /></td>
+					</tr>
+				</table>
+			</h:form>
+		</div>
+
+		<div id="user_logout">
+			<h:form>
+				<h:commandButton value="#{activeSession.activeUser.name}" />
+				<h:commandButton action="#{activeSession.logout()}" value="Logout" />
+			</h:form>
+		</div>
+
+	</ui:composition>
+
+</h:body>
+</html>

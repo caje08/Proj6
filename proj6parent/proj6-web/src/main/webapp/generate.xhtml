@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Facelets Hello World</title>
+</h:head>
+<h:body>
+	<h1>Hello Proj4Users!</h1>
+	<h:form>
+		<h:commandButton action="#{loginMB.logout}" value="Logout" />
+	</h:form>
+	<h:form>
+		<h:commandButton action="#{login.populate}" value="submit" />
+	</h:form>
+	<h:dataTable value="#{login.getUsers()}" var="user">
+		<h:column>#{user.name}</h:column>
+		<h:column>#{user.password}</h:column>
+		<h:column>#{user.email}</h:column>
+	</h:dataTable>
+
+	<br />
+	<h1>Hello Proj4Musicas!</h1>
+	<h:form>
+		<h:commandButton action="#{login.populateMusic}" value="submit" />
+	</h:form>
+
+	<h:dataTable value="#{login.musicas}" var="music">
+		<h:column>#{music.nomemusica}</h:column>
+		<h:column>#{music.interprete}</h:column>
+		<h:column>#{music.album}</h:column>
+		<h:column>#{music.anolancamento}</h:column>
+		<h:column>#{music.path}</h:column>
+		<h:column>#{music.datamusica}</h:column>
+		<h:column>#{music.tipomusica}</h:column>
+		<h:column>#{music.utilizador.name}</h:column>
+
+	</h:dataTable>
+	<br />
+	<h1>Hello Proj4Playlists!</h1>
+	<h:form>
+		<h:commandButton action="#{login.populatePlaylist}" value="submit" />
+	</h:form>
+
+	<h:dataTable value="#{login.playlists}" var="play">
+		<h:column>#{play.utilizador}</h:column>
+		<h:column>#{play.idPlaylist}</h:column>
+		<h:column>#{play.datacriacao}</h:column>
+		<h:column>#{play.designacao}</h:column>
+		<h:column>#{play.songs}</h:column>
+	</h:dataTable>
+	
+	<h1>Hello Proj4PlaylistsOrdered!</h1>
+</h:body>
+</html>

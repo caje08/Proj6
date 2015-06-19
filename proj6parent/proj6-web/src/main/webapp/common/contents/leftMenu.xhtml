@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:body>
+	<ui:composition>
+
+
+		<h:form id="browseMusicLibrary"
+			rendered="#{!render.addMusicToPlayList}">
+			<!-- Mostra Biblioteca de Músicas no browser -->
+			<h:commandButton action="#{activeSession.browseMusics()}"
+				value="Browse Music Library" />
+
+			<!-- Mostra Biblioteca de Músicas no browser por User -->
+			<h:commandButton action="#{activeSession.browseMusicsFromUser()}"
+				value="Browse Music from User" />
+		</h:form>
+
+		<!-- Exibe PlayLists do User -->
+		<h:form id="userPlayLists" rendered="#{!render.addMusicToPlayList}">
+			<h2>PlayLists:</h2>
+			<h:dataTable id="userPlayLists"
+				value="#{activeSession.userPlaylists}" var="playlist">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name " />
+						<h:commandLink action="#{activeSession.sortPlayListDisplay(1)}"
+							value="&#8593;" />
+						<h:commandLink action="#{activeSession.sortPlayListDisplay(2)}"
+							value="&#8595;" />
+					</f:facet>
+					<h:commandButton
+						action="#{activeSession.setActivePlayList(playlist)}"
+						value="#{playlist.designacao}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Size " />
+						<h:commandLink action="#{activeSession.sortPlayListDisplay(3)}"
+							value="&#8593;" />
+						<h:commandLink action="#{activeSession.sortPlayListDisplay(4)}"
+							value="&#8595;" />
+					</f:facet>
+					<h:commandButton value="#{playlist.arraySize}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Added " />
+						<h:commandLink action="#{activeSession.sortPlayListDisplay(5)}"
+							value="&#8593;" />
+						<h:commandLink action="#{activeSession.sortPlayListDisplay(6)}"
+							value="&#8595;" />
+					</f:facet>
+					<h:commandButton value="#{playlist.datacriacao}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value=" " />
+					</f:facet>
+					<h:commandButton action="#{activeSession.removePlayList(playlist)}"
+						value="delete" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+
+		<!-- Seleccionar a PlayList à qual vai ser acrescentada a música -->
+		<h:form id="selectUserPlayListsToAddMusicTo"
+			rendered="#{render.addMusicToPlayList}">
+			<h2>Select PlayList:</h2>
+			<h:dataTable id="userPlayLists"
+				value="#{activeSession.userPlaylists}" var="playlist">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="PlayLists:" />
+					</f:facet>
+					<h:commandButton
+						action="#{activeSession.addMusicToPlayListEnd(playlist)}"
+						value="#{playlist.designacao}" />
+				</h:column>
+			</h:dataTable>
+			<h:commandButton action="#{render.setAddMusicToPlayList(false)}"
+				value="Cancel" />
+		</h:form>
+
+		<div id="new_playlist">
+			<h:form>
+				<h:outputLabel value="New PlayList:" />
+				<h:inputText value="#{activeSession.newPlayListName}" />
+				<h:commandButton action="#{activeSession.createPlayList()}"
+					value="Create new PlayList" />
+			</h:form>
+		</div>
+
+	</ui:composition>
+</h:body>
+</html>
