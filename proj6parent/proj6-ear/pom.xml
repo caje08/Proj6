@@ -17,7 +17,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ear-plugin</artifactId>
 				<configuration>
-					<finalName>firstear</finalName>
+					<finalName>proj6ear</finalName>
 					<defaultJavaBundleDir>lib/</defaultJavaBundleDir>
 					<skinnyWars>true</skinnyWars>
 					<modules>
