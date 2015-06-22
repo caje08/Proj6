@@ -30,7 +30,8 @@
 
 							<td><h:commandButton value="New User" action="registry" /></td>
 
-							<td><h:outputText style="color:red" value="#{loginMB.errorMessage}"/></td>
+							<td><h:outputText style="color:red"
+									value="#{loginMB.errorMessage}" /></td>
 						</tr>
 					</table>
 				</h:form>
@@ -52,9 +53,11 @@
 
 		<ui:define name="left" />
 		<ui:define name="right" />
-		<ui:define name="browser" />
+		<ui:define name="browser">
+			<h:graphicImage styleClass="displayed" library="images"
+					name="Spotifly_logo.png" />
+		</ui:define>
 		<ui:define name="bottom" />
-		
 	</ui:composition>
 </h:body>
 

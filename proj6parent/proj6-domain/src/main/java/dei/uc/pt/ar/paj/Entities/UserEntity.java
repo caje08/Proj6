@@ -52,6 +52,9 @@ public class UserEntity implements Serializable {
 	//
 	@OneToMany(mappedBy = "utilizador")
 	private List<MusicEntity> usermusicas;
+	
+	@OneToMany(mappedBy = "utilizador", orphanRemoval = true)
+    private List<LyricEntity> lyrics;
 
 	static Logger logger = LoggerFactory.getLogger(UserEntity.class);
 
@@ -74,6 +77,14 @@ public class UserEntity implements Serializable {
 
 	public void setUserId(Long id) {
 		this.userid = id;
+	}
+	
+	public List<LyricEntity> getLyrics() {
+		return lyrics;
+	}
+
+	public void setLyrics(List<LyricEntity> lyrics) {
+		this.lyrics = lyrics;
 	}
 
 	public String getDatanascimento() {

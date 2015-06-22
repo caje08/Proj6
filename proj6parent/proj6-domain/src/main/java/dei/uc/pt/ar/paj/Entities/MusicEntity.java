@@ -156,6 +156,12 @@ public class MusicEntity implements Serializable {
 
 	@Column(name = "tipomusica", nullable = false)
 	private String tipomusica;  
+	
+	@OneToMany(mappedBy = "music", orphanRemoval = true)
+	//private LyricEntity lyrics;
+    private List<LyricEntity> lyrics;
+
+    private boolean lyricExist;
 
 	public static enum Ordering {
 		FIND_ALL, FIND_BY_INTERPRETE, FIND_BY_NOMEMUSICA, FIND_BY_ALBUM, FIND_BY_ANO, FIND_BY_OWNER,
@@ -214,6 +220,30 @@ public class MusicEntity implements Serializable {
 
 	public void setLength(double length) {
 		this.length = length;
+	}
+	
+	public List<LyricEntity> getLyrics() {
+		return lyrics;
+	}
+
+	public void setLyrics(List<LyricEntity> lyrics) {
+		this.lyrics = lyrics;
+	}
+	
+//	public LyricEntity getLyrics() {
+//		return lyrics;
+//	}
+//
+//	public void setLyrics(LyricEntity lyrics) {
+//		this.lyrics = lyrics;
+//	}
+
+	public boolean isLyricExist() {
+		return lyricExist;
+	}
+
+	public void setLyricExist(boolean lyricExist) {
+		this.lyricExist = lyricExist;
 	}
 
 	public List<PlaylistEntity> getPlaylists() {
