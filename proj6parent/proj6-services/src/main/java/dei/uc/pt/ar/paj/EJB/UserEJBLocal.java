@@ -12,5 +12,9 @@ public interface UserEJBLocal {
 	public void populate();
 
 	public List<UserEntity> getUsers();
+	
+	public UserEntity findByEmail(String email);
+	
+	public UserEntity findById(long id);
 
 }

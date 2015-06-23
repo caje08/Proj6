@@ -21,13 +21,16 @@ import org.slf4j.LoggerFactory;
 		@NamedQuery(name = "User.findByEmailPass", query = "SELECT u FROM UserEntity u WHERE u.email = :email AND u.password = :password"),
 		@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
 		@NamedQuery(name = "User.findByName", query = "SELECT u FROM UserEntity u WHERE u.name = :name"),
-		@NamedQuery(name = "User.findPlayByName", query = "SELECT u FROM UserEntity u WHERE u.email = :email") })
+		@NamedQuery(name = "User.findPlayByName", query = "SELECT u FROM UserEntity u WHERE u.email = :email"),
+		@NamedQuery(name = "User.findById", query = "SELECT u FROM UserEntity u WHERE u.userid = :id")})
+		
 public class UserEntity implements Serializable {
 
 	public static final String FIND_BY_EMAIL_AND_PASS = "User.findByEmailPass";
 	public static final String FIND_BY_EMAIL = "User.findByEmail";
 	public static final String FIND_BY_NAME = "User.findByName";
 	public static final String FIND__PLAY_BY_NAME = "User.findPlayByName";
+	
 	
 	private static final long serialVersionUID = 1L;
 	@Id

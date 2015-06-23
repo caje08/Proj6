@@ -7,6 +7,8 @@ package dei.uc.pt.ar.paj.Facade;
 
 
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -43,6 +45,7 @@ public class UserFacade extends AbstractFacade<UserEntity> {
             return null;
         }        
     }
+    
     
     public UserEntity updateUser(UserEntity usr,String name, String email, String password){
         usr.setName(name);

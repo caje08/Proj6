@@ -57,6 +57,8 @@ public class UserEJB implements UserEJBLocal {
 
 		Query q = em.createQuery("from UserEntity u");
 		List<UserEntity> users = q.getResultList();
+		
+		System.out.println(users);
 
 		System.out.println("Depois de apresentar os resultados");
 		logger.trace("Trace Depois getUsers()");
@@ -90,6 +92,17 @@ public class UserEJB implements UserEJBLocal {
             return null;
         }        
     }
+	
+	public UserEntity findById(long id){
+		TypedQuery<UserEntity> q = em.createNamedQuery("User.findById", UserEntity.class);
+        q.setParameter("id", id);
+        try{
+            return q.getSingleResult();
+        }catch(Exception e){
+            System.err.println("Single result not found: " + e);
+            return null;
+        }        
+	}
 	
 	public UserEntity findByName(String name) {
         TypedQuery<UserEntity> q = em.createNamedQuery("User.findByName", UserEntity.class);
