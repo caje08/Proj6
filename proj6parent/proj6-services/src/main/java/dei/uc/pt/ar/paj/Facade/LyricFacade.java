@@ -63,23 +63,23 @@ public class LyricFacade extends AbstractFacade<LyricEntity> {
 	}
 
 	public void editLyric(LyricEntity lyric) {
-		getEntityManager().merge(lyric);
-		UserEntity utilizador = lyric.getUtilizador();
-		MusicEntity m = lyric.getMusic();
-		// vai à tabela UserEntity e actualiza a lista de lyrics
-		for (LyricEntity l : utilizador.getLyrics()) {
-			if (Objects.equals(l.getUtilizador().getUserId(),
-					utilizador.getUserId())) {
-				l.setTextLyric(lyric.getTextLyric());
-				getEntityManager().merge(utilizador);
-			}
-		}
+//		getEntityManager().merge(lyric);
+//		UserEntity utilizador = lyric.getUtilizador();
+//		MusicEntity m = lyric.getMusic();
+//		// vai à tabela UserEntity e actualiza a lista de lyrics
+//		for (LyricEntity l : utilizador.getUserLyrics()) {
+//			if (Objects.equals(l.getUtilizador().getUserId(),
+//					utilizador.getUserId())) {
+//				l.setTextLyric(lyric.getTextLyric());
+//				getEntityManager().merge(utilizador);
+//			}
+//		}
 		// vai à tabela Music e actualiza a lista de lyrics
-		for (LyricEntity l : m.getLyrics()) {
-			if (Objects.equals(l.getMusic().getMusicid(), m.getMusicid())) {
-				l.setTextLyric(lyric.getTextLyric());
-				getEntityManager().merge(m);
-			}
-		}
+//		for (LyricEntity l : m.getLyrics()) {
+//			if (Objects.equals(l.getMusic().getMusicid(), m.getMusicid())) {
+//				l.setTextLyric(lyric.getTextLyric());
+//				getEntityManager().merge(m);
+//			}
+//		}
 	}
 }

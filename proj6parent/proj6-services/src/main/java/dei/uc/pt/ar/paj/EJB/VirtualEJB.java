@@ -1,4 +1,4 @@
-package dei.uc.pt.ar.paj.EJB;
+package dei.uc.pt.ar.paj.ejb;
 
 import java.io.Serializable;
 import java.util.List;

@@ -41,7 +41,7 @@
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
-			<version>3.0.2.Final</version>
+			<version>3.0.11.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>dei.uc.pt.ar.paj.carlos.nuno</groupId>
@@ -54,6 +54,16 @@
 					<groupId>dei.uc.pt.ar.paj</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxb-provider</artifactId>
+			<version>3.0.11.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.11.Final</version>
 		</dependency>
 	</dependencies>
 

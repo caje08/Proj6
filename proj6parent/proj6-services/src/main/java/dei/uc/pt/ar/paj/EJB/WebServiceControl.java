@@ -1,4 +1,4 @@
-package dei.uc.pt.ar.paj.EJB;
+package dei.uc.pt.ar.paj.ejb;
 
 //	import com.LyricWiki.LyricWikiPortType_Stub;
 //	import com.LyricWiki.LyricWiki_Impl;
@@ -105,8 +105,19 @@ package dei.uc.pt.ar.paj.EJB;
 	            return "Not Found";
 	        }
 	    }
-/*
-	    //---LyricWiki---
+
+	    public String lyricRESTResult(MusicEntity m) {
+	        this.result = client.target("http://lyrics.wikia.com/api.php")
+	                .queryParam("func", "getSong")
+	                .queryParam("artist", m.getInterprete())
+	                .queryParam("song", m.getNomemusica())
+	                .queryParam("fmt", "text")
+	                .request(MediaType.TEXT_PLAIN)
+	                .get(String.class);
+	        return result;
+	    }
+	    
+	  /*  //---LyricWiki---
 	    public String songLyricWikiSOAP(MusicEntity m) throws RemoteException {
 	        LyricWikiPortType_Stub lw = createProxy();
 	        LyricsResult lr = lw.getSong(m.getInterprete(), m.getNomemusica());
@@ -147,8 +158,8 @@ package dei.uc.pt.ar.paj.EJB;
 	            return "LYRIC";
 	        }
 	        return "NO LYRIC";
-	    }
-*/
+	    }*/
+
 	    //---GETTERS E SETTERS
 	    public String getResult() {
 	        return result;

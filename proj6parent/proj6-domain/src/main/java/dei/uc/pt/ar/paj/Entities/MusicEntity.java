@@ -16,57 +16,55 @@ import org.slf4j.LoggerFactory;
  *
  */
 @Entity
-@Table(name="musica")
+@Table(name = "musica")
 @NamedQueries({
-	@NamedQuery(name = "Music.findByOwner", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId"),
-	@NamedQuery(name = "Music.findAll", query="SELECT m FROM MusicEntity m"),
-	@NamedQuery(name = "Music.findByAlbum", query="SELECT m FROM MusicEntity m WHERE m.album like :album"),
-	@NamedQuery(name = "Music.findByAno", query="SELECT m FROM MusicEntity m WHERE m.anolancamento like :year"),
+		@NamedQuery(name = "Music.findByOwner", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId"),
+		@NamedQuery(name = "Music.findAll", query = "SELECT m FROM MusicEntity m"),
+		@NamedQuery(name = "Music.findByAlbum", query = "SELECT m FROM MusicEntity m WHERE m.album like :album"),
+		@NamedQuery(name = "Music.findByAno", query = "SELECT m FROM MusicEntity m WHERE m.anolancamento like :year"),
 
-	
-	//Search
-	@NamedQuery(name = "Music.findBySearch", query = "SELECT m FROM MusicEntity m WHERE LOWER(m.nomemusica) LIKE :searchTerm OR LOWER(m.interprete) LIKE :searchTerm"),
-	@NamedQuery(name = "Music.findByNomeMusica", query="SELECT m FROM MusicEntity m WHERE LOWER(m.nomemusica) LIKE :searchTerm"),
-	@NamedQuery(name = "Music.findByInterprete", query="SELECT m FROM MusicEntity m WHERE LOWER(m.interprete) LIKE :searchTerm"),
-	
+		// Search
+		@NamedQuery(name = "Music.findBySearch", query = "SELECT m FROM MusicEntity m WHERE LOWER(m.nomemusica) LIKE :searchTerm OR LOWER(m.interprete) LIKE :searchTerm"),
+		@NamedQuery(name = "Music.findByNomeMusica", query = "SELECT m FROM MusicEntity m WHERE LOWER(m.nomemusica) LIKE :searchTerm"),
+		@NamedQuery(name = "Music.findByInterprete", query = "SELECT m FROM MusicEntity m WHERE LOWER(m.interprete) LIKE :searchTerm"),
 
-	//Pesquisas de ordenação
-	@NamedQuery(name = "Music.findAllOrderByNomeMusicaAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.nomemusica ASC"),
-	@NamedQuery(name = "Music.findAllOrderByNomeMusicaDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.nomemusica DESC"),
+		// Pesquisas de ordenação
+		@NamedQuery(name = "Music.findAllOrderByNomeMusicaAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.nomemusica ASC"),
+		@NamedQuery(name = "Music.findAllOrderByNomeMusicaDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.nomemusica DESC"),
 
-	@NamedQuery(name = "Music.findAllOrderByInterpreteAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.interprete ASC"),
-	@NamedQuery(name = "Music.findAllOrderByInterpreteDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.interprete DESC"),
+		@NamedQuery(name = "Music.findAllOrderByInterpreteAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.interprete ASC"),
+		@NamedQuery(name = "Music.findAllOrderByInterpreteDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.interprete DESC"),
 
-	@NamedQuery(name = "Music.findAllOrderByTimeAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.length ASC"),
-	@NamedQuery(name = "Music.findAllOrderByTimeDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.length DESC"),
+		@NamedQuery(name = "Music.findAllOrderByTimeAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.length ASC"),
+		@NamedQuery(name = "Music.findAllOrderByTimeDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.length DESC"),
 
-	@NamedQuery(name = "Music.findAllOrderByAlbumAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.album ASC"),
-	@NamedQuery(name = "Music.findAllOrderByAlbumDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.album DESC"),
+		@NamedQuery(name = "Music.findAllOrderByAlbumAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.album ASC"),
+		@NamedQuery(name = "Music.findAllOrderByAlbumDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.album DESC"),
 
-	@NamedQuery(name = "Music.findAllOrderByAnolancamentoAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.anolancamento ASC"),
-	@NamedQuery(name = "Music.findAllOrderByAnolancamentoDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.anolancamento DESC"),
+		@NamedQuery(name = "Music.findAllOrderByAnolancamentoAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.anolancamento ASC"),
+		@NamedQuery(name = "Music.findAllOrderByAnolancamentoDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.anolancamento DESC"),
 
-	@NamedQuery(name = "Music.findAllOrderByOwnerAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.utilizador ASC"),
-	@NamedQuery(name = "Music.findAllOrderByOwnerDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.utilizador DESC"),
+		@NamedQuery(name = "Music.findAllOrderByOwnerAscending", query = "SELECT m FROM MusicEntity m ORDER BY m.utilizador ASC"),
+		@NamedQuery(name = "Music.findAllOrderByOwnerDescending", query = "SELECT m FROM MusicEntity m ORDER BY m.utilizador DESC"),
 
+		// Pesquisas de ordenação por OWNER
+		@NamedQuery(name = "Music.findByOwnerOrderByNomeMusicaAscending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.nomemusica ASC"),
+		@NamedQuery(name = "Music.findByOwnerOrderByNomeMusicaDescending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.nomemusica DESC"),
 
-	//Pesquisas de ordenação por OWNER
-	@NamedQuery(name = "Music.findByOwnerOrderByNomeMusicaAscending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.nomemusica ASC"),
-	@NamedQuery(name = "Music.findByOwnerOrderByNomeMusicaDescending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.nomemusica DESC"),
+		@NamedQuery(name = "Music.findByOwnerOrderByInterpreteAscending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.interprete ASC"),
+		@NamedQuery(name = "Music.findByOwnerOrderByInterpreteDescending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.interprete DESC"),
 
-	@NamedQuery(name = "Music.findByOwnerOrderByInterpreteAscending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.interprete ASC"),
-	@NamedQuery(name = "Music.findByOwnerOrderByInterpreteDescending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.interprete DESC"),
+		@NamedQuery(name = "Music.findByOwnerOrderByTimeAscending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.length ASC"),
+		@NamedQuery(name = "Music.findByOwnerOrderByTimeDescending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.length DESC"),
 
-	@NamedQuery(name = "Music.findByOwnerOrderByTimeAscending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.length ASC"),
-	@NamedQuery(name = "Music.findByOwnerOrderByTimeDescending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.length DESC"),
+		@NamedQuery(name = "Music.findByOwnerOrderByAlbumAscending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.album ASC"),
+		@NamedQuery(name = "Music.findByOwnerOrderByAlbumDescending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.album DESC"),
 
-	@NamedQuery(name = "Music.findByOwnerOrderByAlbumAscending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.album ASC"),
-	@NamedQuery(name = "Music.findByOwnerOrderByAlbumDescending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.album DESC"),
+		@NamedQuery(name = "Music.findByOwnerOrderByAnolancamentoAscending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.anolancamento ASC"),
+		@NamedQuery(name = "Music.findByOwnerOrderByAnolancamentoDescending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.anolancamento DESC"),
 
-	@NamedQuery(name = "Music.findByOwnerOrderByAnolancamentoAscending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.anolancamento ASC"),
-	@NamedQuery(name = "Music.findByOwnerOrderByAnolancamentoDescending", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId ORDER BY m.anolancamento DESC"),
-
-	//	@NamedQuery(name = "Music.findByUser", query="SELECT m FROM MusicEntity m WHERE m.utilizador like :user"),
+// @NamedQuery(name = "Music.findByUser",
+// query="SELECT m FROM MusicEntity m WHERE m.utilizador like :user"),
 })
 public class MusicEntity implements Serializable {
 
@@ -74,55 +72,53 @@ public class MusicEntity implements Serializable {
 	public static final String FIND_BY_ALBUM = "Music.findByAlbum";
 	public static final String FIND_BY_ANO = "Music.findByAno";
 	public static final String FIND_BY_OWNER = "Music.findByOwner";
-	
+
 	// Search
 	public static final String FIND_BY_SEARCH = "Music.findBySearch";
 	public static final String FIND_BY_NOMEMUSICA = "Music.findByNomeMusica";
 	public static final String FIND_BY_INTERPRETE = "Music.findByInterprete";
 
+	// Pesquisas de ordenação
+	public static final String FIND_ALL_ORDER_BY_NOME_ASC = "Music.findAllOrderByNomeMusicaAscending";
+	public static final String FIND_ALL_ORDER_BY_NOME_DESC = "Music.findAllOrderByNomeMusicaDescending";
 
-	//Pesquisas de ordenação
-	public static final String FIND_ALL_ORDER_BY_NOME_ASC = "Music.findAllOrderByNomeMusicaAscending"; 
-	public static final String FIND_ALL_ORDER_BY_NOME_DESC = "Music.findAllOrderByNomeMusicaDescending"; 
+	public static final String FIND_ALL_ORDER_BY_INTERPRETE_ASC = "Music.findAllOrderByInterpreteAscending";
+	public static final String FIND_ALL_ORDER_BY_INTERPRETE_DESC = "Music.findAllOrderByInterpreteDescending";
 
-	public static final String FIND_ALL_ORDER_BY_INTERPRETE_ASC = "Music.findAllOrderByInterpreteAscending"; 
-	public static final String FIND_ALL_ORDER_BY_INTERPRETE_DESC = "Music.findAllOrderByInterpreteDescending"; 
+	public static final String FIND_ALL_ORDER_BY_TIME_ASC = "Music.findAllOrderByTimeAscending";
+	public static final String FIND_ALL_ORDER_BY_TIME_DESC = "Music.findAllOrderByTimeDescending";
 
-	public static final String FIND_ALL_ORDER_BY_TIME_ASC = "Music.findAllOrderByTimeAscending"; 
-	public static final String FIND_ALL_ORDER_BY_TIME_DESC = "Music.findAllOrderByTimeDescending"; 
-
-	public static final String FIND_ALL_ORDER_BY_ALBUM_ASC = "Music.findAllOrderByAlbumAscending"; 
+	public static final String FIND_ALL_ORDER_BY_ALBUM_ASC = "Music.findAllOrderByAlbumAscending";
 	public static final String FIND_ALL_ORDER_BY_ALBUM_DESC = "Music.findAllOrderByAlbumDescending";
 
-	public static final String FIND_ALL_ORDER_BY_YEAR_ASC = "Music.findAllOrderByAnolancamentoAscending"; 
+	public static final String FIND_ALL_ORDER_BY_YEAR_ASC = "Music.findAllOrderByAnolancamentoAscending";
 	public static final String FIND_ALL_ORDER_BY_YEAR_DESC = "Music.findAllOrderByAnolancamentoDescending";
 
-	public static final String FIND_ALL_ORDER_BY_OWNER_ASC = "Music.findAllOrderByOwnerAscending"; 
+	public static final String FIND_ALL_ORDER_BY_OWNER_ASC = "Music.findAllOrderByOwnerAscending";
 	public static final String FIND_ALL_ORDER_BY_OWNER_DESC = "Music.findAllOrderByOwnerDescending";
 
+	// Pesquisas de ordenação por OWNER
+	public static final String FIND_BY_OWNER_ORDER_BY_NOME_ASC = "Music.findByOwnerOrderByNomeMusicaAscending";
+	public static final String FIND_BY_OWNER_ORDER_BY_NOME_DESC = "Music.findByOwnerOrderByNomeMusicaDescending";
 
+	public static final String FIND_BY_OWNER_ORDER_BY_INTERPRETE_ASC = "Music.findByOwnerOrderByInterpreteAscending";
+	public static final String FIND_BY_OWNER_ORDER_BY_INTERPRETE_DESC = "Music.findByOwnerOrderByInterpreteDescending";
 
-	//Pesquisas de ordenação por OWNER
-	public static final String FIND_BY_OWNER_ORDER_BY_NOME_ASC = "Music.findByOwnerOrderByNomeMusicaAscending"; 
-	public static final String FIND_BY_OWNER_ORDER_BY_NOME_DESC = "Music.findByOwnerOrderByNomeMusicaDescending"; 
+	public static final String FIND_BY_OWNER_ORDER_BY_TIME_ASC = "Music.findByOwnerOrderByTimeAscending";
+	public static final String FIND_BY_OWNER_ORDER_BY_TIME_DESC = "Music.findByOwnerOrderByTimeDescending";
 
-	public static final String FIND_BY_OWNER_ORDER_BY_INTERPRETE_ASC = "Music.findByOwnerOrderByInterpreteAscending"; 
-	public static final String FIND_BY_OWNER_ORDER_BY_INTERPRETE_DESC = "Music.findByOwnerOrderByInterpreteDescending"; 
-
-	public static final String FIND_BY_OWNER_ORDER_BY_TIME_ASC = "Music.findByOwnerOrderByTimeAscending"; 
-	public static final String FIND_BY_OWNER_ORDER_BY_TIME_DESC = "Music.findByOwnerOrderByTimeDescending"; 
-
-	public static final String FIND_BY_OWNER_ORDER_BY_ALBUM_ASC = "Music.findByOwnerOrderByAlbumAscending"; 
+	public static final String FIND_BY_OWNER_ORDER_BY_ALBUM_ASC = "Music.findByOwnerOrderByAlbumAscending";
 	public static final String FIND_BY_OWNER_ORDER_BY_ALBUM_DESC = "Music.findByOwnerOrderByAlbumDescending";
 
-	public static final String FIND_BY_OWNER_ORDER_BY_YEAR_ASC = "Music.findByOwnerOrderByAnolancamentoAscending"; 
+	public static final String FIND_BY_OWNER_ORDER_BY_YEAR_ASC = "Music.findByOwnerOrderByAnolancamentoAscending";
 	public static final String FIND_BY_OWNER_ORDER_BY_YEAR_DESC = "Music.findByOwnerOrderByAnolancamentoDescending";
 
 	private static final long serialVersionUID = 1L;
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "musicid", nullable = false, unique = true)
 	private Long musicid;
-	//	private int musicid;
+	// private int musicid;
 	@NotNull
 	@Column(name = "nomemusica", nullable = false)
 	private String nomemusica;
@@ -140,7 +136,7 @@ public class MusicEntity implements Serializable {
 	@Column(name = "time")
 	private double length;
 	//
-	@ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "userid", nullable = false)
 	private UserEntity utilizador;
 
@@ -155,30 +151,36 @@ public class MusicEntity implements Serializable {
 	private String datamusica;
 
 	@Column(name = "tipomusica", nullable = false)
-	private String tipomusica;  
+	private String tipomusica;
 	
-	@OneToMany(mappedBy = "music", orphanRemoval = true)
-	//private LyricEntity lyrics;
-    private List<LyricEntity> lyrics;
+	@Column(name = "originalLyric")
+	private String originalLyric;
+	
+	@Column(name = "lyricExist")
+	private boolean lyricExist;
+	
+	@Column(name = "mylyricversion")
+	private boolean mylyricversion;	
 
-    private boolean lyricExist;
+	//@OneToMany(mappedBy = "music", orphanRemoval = true)
+    //private List<LyricEntity> lyrics;
+	// private LyricEntity lyrics;
 
 	public static enum Ordering {
 		FIND_ALL, FIND_BY_INTERPRETE, FIND_BY_NOMEMUSICA, FIND_BY_ALBUM, FIND_BY_ANO, FIND_BY_OWNER,
 
-		//Pesquisas de ordenação
-		FIND_ALL_ORDER_BY_NOME_ASC, FIND_ALL_ORDER_BY_NOME_DESC, FIND_ALL_ORDER_BY_INTERPRETE_ASC, FIND_ALL_ORDER_BY_INTERPRETE_DESC, FIND_ALL_ORDER_BY_TIME_ASC, FIND_ALL_ORDER_BY_TIME_DESC,
-		FIND_ALL_ORDER_BY_ALBUM_ASC, FIND_ALL_ORDER_BY_ALBUM_DESC, FIND_ALL_ORDER_BY_YEAR_ASC, FIND_ALL_ORDER_BY_YEAR_DESC, FIND_ALL_ORDER_BY_OWNER_ASC, FIND_ALL_ORDER_BY_OWNER_DESC,
-		
-		//Pesquisas de ordenação por OWNER
-		FIND_BY_OWNER_ORDER_BY_NOME_ASC, FIND_BY_OWNER_ORDER_BY_NOME_DESC, FIND_BY_OWNER_ORDER_BY_INTERPRETE_ASC, FIND_BY_OWNER_ORDER_BY_INTERPRETE_DESC, FIND_BY_OWNER_ORDER_BY_TIME_ASC, FIND_BY_OWNER_ORDER_BY_TIME_DESC,
-		FIND_BY_OWNER_ORDER_BY_ALBUM_ASC, FIND_BY_OWNER_ORDER_BY_ALBUM_DESC, FIND_BY_OWNER_ORDER_BY_YEAR_ASC, FIND_BY_OWNER_ORDER_BY_YEAR_DESC
+		// Pesquisas de ordenação
+		FIND_ALL_ORDER_BY_NOME_ASC, FIND_ALL_ORDER_BY_NOME_DESC, FIND_ALL_ORDER_BY_INTERPRETE_ASC, FIND_ALL_ORDER_BY_INTERPRETE_DESC, FIND_ALL_ORDER_BY_TIME_ASC, FIND_ALL_ORDER_BY_TIME_DESC, FIND_ALL_ORDER_BY_ALBUM_ASC, FIND_ALL_ORDER_BY_ALBUM_DESC, FIND_ALL_ORDER_BY_YEAR_ASC, FIND_ALL_ORDER_BY_YEAR_DESC, FIND_ALL_ORDER_BY_OWNER_ASC, FIND_ALL_ORDER_BY_OWNER_DESC,
+
+		// Pesquisas de ordenação por OWNER
+		FIND_BY_OWNER_ORDER_BY_NOME_ASC, FIND_BY_OWNER_ORDER_BY_NOME_DESC, FIND_BY_OWNER_ORDER_BY_INTERPRETE_ASC, FIND_BY_OWNER_ORDER_BY_INTERPRETE_DESC, FIND_BY_OWNER_ORDER_BY_TIME_ASC, FIND_BY_OWNER_ORDER_BY_TIME_DESC, FIND_BY_OWNER_ORDER_BY_ALBUM_ASC, FIND_BY_OWNER_ORDER_BY_ALBUM_DESC, FIND_BY_OWNER_ORDER_BY_YEAR_ASC, FIND_BY_OWNER_ORDER_BY_YEAR_DESC
 	};
-	static Logger logger = LoggerFactory.getLogger(MusicEntity.class); 
+
+	static Logger logger = LoggerFactory.getLogger(MusicEntity.class);
 
 	public MusicEntity() {
 		super();
-		this.playlists=new ArrayList<PlaylistEntity>();
+		this.playlists = new ArrayList<PlaylistEntity>();
 	}
 
 	public MusicEntity(String nomemusica, String interprete, String album,
@@ -193,12 +195,12 @@ public class MusicEntity implements Serializable {
 		this.path = path;
 		this.datamusica = datamusica;
 		this.tipomusica = tipomusica;
-		this.length=0;
-
-		this.playlists=new ArrayList<PlaylistEntity>();
+		this.length = 0;
+		this.lyricExist=false;
+		this.playlists = new ArrayList<PlaylistEntity>();
 	}
 
-	public Long getMusicid(){
+	public Long getMusicid() {
 		return this.musicid;
 	}
 
@@ -214,6 +216,22 @@ public class MusicEntity implements Serializable {
 		this.musicid = musicid;
 	}
 
+	public String getOriginalLyric() {
+		return originalLyric;
+	}
+
+	public void setOriginalLyric(String originalLyric) {
+		this.originalLyric = originalLyric;
+	}
+
+	public boolean isMylyricversion() {
+		return mylyricversion;
+	}
+
+	public void setMylyricversion(boolean mylyricversion) {
+		this.mylyricversion = mylyricversion;
+	}
+
 	public double getLength() {
 		return length;
 	}
@@ -221,20 +239,12 @@ public class MusicEntity implements Serializable {
 	public void setLength(double length) {
 		this.length = length;
 	}
-	
-	public List<LyricEntity> getLyrics() {
-		return lyrics;
-	}
 
-	public void setLyrics(List<LyricEntity> lyrics) {
-		this.lyrics = lyrics;
-	}
-	
-//	public LyricEntity getLyrics() {
+//	public List<LyricEntity> getLyrics() {
 //		return lyrics;
 //	}
 //
-//	public void setLyrics(LyricEntity lyrics) {
+//	public void setLyrics(List<LyricEntity> lyrics) {
 //		this.lyrics = lyrics;
 //	}
 
@@ -327,12 +337,14 @@ public class MusicEntity implements Serializable {
 
 	@Override
 	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are not set
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
 		if (!(object instanceof MusicEntity)) {
 			return false;
 		}
 		MusicEntity other = (MusicEntity) object;
-		return (this.musicid != null || other.musicid == null) && (this.musicid == null || this.musicid.equals(other.musicid));
+		return (this.musicid != null || other.musicid == null)
+				&& (this.musicid == null || this.musicid.equals(other.musicid));
 	}
 
 	@Override

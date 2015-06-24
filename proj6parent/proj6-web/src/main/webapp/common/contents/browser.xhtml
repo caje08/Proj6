@@ -214,6 +214,14 @@
 						action="#{activeSession.addMusicToPlayListStart(music)}"
 						value="Add to Playlist" />
 				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Lyric Available" />
+					</f:facet>
+					<h:outputText
+						value="#{music.lyricExist}" />
+				</h:column>
 
 			</h:dataTable>
 		</h:form>
