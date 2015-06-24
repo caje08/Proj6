@@ -6,9 +6,9 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import dei.uc.pt.ar.paj.EJB.PasswordEJB;
 import dei.uc.pt.ar.paj.Entities.UserEntity;
 import dei.uc.pt.ar.paj.Facade.UserFacade;
+import dei.uc.pt.ar.paj.ejb.PasswordEJB;
 
 import java.io.Serializable;
 

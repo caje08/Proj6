@@ -15,10 +15,10 @@ import javax.persistence.TypedQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import dei.uc.pt.ar.paj.EJB.PlaylistEJB;
 import dei.uc.pt.ar.paj.Entities.PlaylistEntity;
 import dei.uc.pt.ar.paj.Entities.UserEntity;
 import dei.uc.pt.ar.paj.Entities.PlaylistEntity.Ordering;
+import dei.uc.pt.ar.paj.ejb.PlaylistEJB;
 
 /**
  *

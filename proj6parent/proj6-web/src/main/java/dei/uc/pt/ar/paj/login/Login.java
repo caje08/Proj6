@@ -10,13 +10,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
-import dei.uc.pt.ar.paj.EJB.MusicEJBLocal;
-import dei.uc.pt.ar.paj.EJB.PlaylistEJBLocal;
-import dei.uc.pt.ar.paj.EJB.UserEJBLocal;
-import dei.uc.pt.ar.paj.EJB.VirtualEJB;
 import dei.uc.pt.ar.paj.Entities.MusicEntity;
 import dei.uc.pt.ar.paj.Entities.PlaylistEntity;
 import dei.uc.pt.ar.paj.Entities.UserEntity;
+import dei.uc.pt.ar.paj.ejb.MusicEJBLocal;
+import dei.uc.pt.ar.paj.ejb.PlaylistEJBLocal;
+import dei.uc.pt.ar.paj.ejb.UserEJBLocal;
+import dei.uc.pt.ar.paj.ejb.VirtualEJB;
 import dei.uc.pt.ar.paj.web.ActiveSession;
 
 @Named

@@ -15,9 +15,9 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import dei.uc.pt.ar.paj.EJB.PasswordEJB;
 import dei.uc.pt.ar.paj.Entities.UserEntity;
 import dei.uc.pt.ar.paj.Facade.UserFacade;
+import dei.uc.pt.ar.paj.ejb.PasswordEJB;
 import dei.uc.pt.ar.paj.login.LoginMB;
 
 /**

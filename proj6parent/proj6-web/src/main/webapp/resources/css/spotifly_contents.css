@@ -119,3 +119,9 @@ a:active {
 
 #global_container input:hover[type=file] {
 }
+
+IMG.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -17,8 +17,9 @@ import org.mockito.Mock;
 import dei.uc.pt.ar.paj.Entities.MusicEntity;
 import dei.uc.pt.ar.paj.Entities.PlaylistEntity;
 import dei.uc.pt.ar.paj.Entities.UserEntity;
-import dei.uc.pt.ar.paj.EJB.PasswordEJB;
 import dei.uc.pt.ar.paj.Facade.UserFacade;
+import dei.uc.pt.ar.paj.ejb.PasswordEJB;
+import dei.uc.pt.ar.paj.ejb.UserEJB;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
