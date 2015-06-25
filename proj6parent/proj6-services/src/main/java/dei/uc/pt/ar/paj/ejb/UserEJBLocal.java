@@ -16,5 +16,7 @@ public interface UserEJBLocal {
 	public UserEntity findByEmail(String email);
 	
 	public UserEntity findById(long id);
+	
+	
 
 }

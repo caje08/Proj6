@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import dei.uc.pt.ar.paj.Entities.UserEntity;
 import dei.uc.pt.ar.paj.Facade.UserFacade;
 import dei.uc.pt.ar.paj.ejb.PasswordEJB;
+import dei.uc.pt.ar.paj.ejb.UserEJB;
 import dei.uc.pt.ar.paj.ejb.VirtualEJB;
 import dei.uc.pt.ar.paj.web.ActiveSession;
 
@@ -196,33 +197,23 @@ public class LoginMB implements Serializable{
 	public String logout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-		session.invalidate();
+				
 		return "login.xhtml?faces-redirect=true";
 	}
 
 	public UserEntity getLoggedUser(){
 		return userSession.getLoggedUser();
 	}
-	public void doLogin(){
-		//    	UserEntity usertmp1= new UserEntity("Carlos", "40bd001563085fc35165329ea1ff5c5ecbdbbeef", "carlos@gmail.com",
-		//   			 "1970/06/13"); //pass 123
-		//    	password="123";
-		//    	email="carlos@gmail.com";
-		searchUser();
-		//userSession.setLoggedUser(userFacade.findByEmailPass(email, pw.encrypt(password)));
-		ejb.populate();
-		//		playlistejb.populatePlaylist();
-		//		session.init(ejb.getUser(i));
-		UserEntity usertmp1=getLoggedUser();
-		//		System.out.println("doLogin() com 'usertmp1.email'= "+usertmp1.getEmail());
-		session.init(usertmp1);
-		redirect();
+	
+	public void doLogin(){		
+		searchUser();		
 	}
 
 	private void redirect(){
 
 		String redirect="index.xhtml";
-
+		
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletResponse response = (HttpServletResponse)context.getExternalContext().getResponse();
 		try {

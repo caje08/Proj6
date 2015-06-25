@@ -25,6 +25,7 @@ public class AppConfig extends Application{
 	private void addRestResourceClasses(Set<Class<?>> resources) {
 	    // resources.add(xpto.class);
 		resources.add(UserWS.class);
+		resources.add(PlaylistWS.class);
 		
 	}
 	

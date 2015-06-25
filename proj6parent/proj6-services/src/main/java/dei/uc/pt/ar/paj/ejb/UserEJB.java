@@ -1,6 +1,7 @@
 package dei.uc.pt.ar.paj.ejb;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -26,10 +27,17 @@ public class UserEJB implements UserEJBLocal {
 
 	@PersistenceContext(name = "myPU")
 	private EntityManager em;
+	
 
 	String datanasc;
 	// SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
-
+	
+	//Number of logged users
+	private static int userCount = 0;
+	
+	private static List<UserEntity> loggedUsers = new ArrayList<>();
+	
+	
 	static Logger logger = LoggerFactory.getLogger(UserEJB.class);
 
 	public UserEJB() {
@@ -129,4 +137,25 @@ public class UserEJB implements UserEJBLocal {
 		 }
 	
 	}
+	
+	public static void increaseUserCount(UserEntity user){
+		loggedUsers.add(user);
+		userCount=loggedUsers.size();		
+	}
+	
+	public static void decreaseUserCount(UserEntity user){
+		loggedUsers.remove(user);
+		userCount=loggedUsers.size();	
+	}
+
+	public static int getUserCount() {
+		return userCount;
+	}
+	
+	public static List<UserEntity> getLoggedUsers(){
+		return loggedUsers;
+	}
+
+	
+	
 }

@@ -22,6 +22,7 @@ import dei.uc.pt.ar.paj.Facade.PlaylistFacade;
 import dei.uc.pt.ar.paj.Facade.UserFacade;
 import dei.uc.pt.ar.paj.ejb.MusicEJBLocal;
 import dei.uc.pt.ar.paj.ejb.PlaylistEJBLocal;
+import dei.uc.pt.ar.paj.ejb.UserEJB;
 import dei.uc.pt.ar.paj.ejb.UserEJBLocal;
 import dei.uc.pt.ar.paj.ejb.VirtualEJB;
 import dei.uc.pt.ar.paj.login.UserSession;
@@ -139,6 +140,8 @@ public class ActiveSession implements Serializable {
 		this.activeUser.setUserplaylists(userPlaylists);
 		this.sessionLoggedIn = true;
 		this.mensagem = "";
+		
+		UserEJB.increaseUserCount(activeUser);
 	}
 
 	public String getEditUserNewUserName() {
@@ -645,12 +648,14 @@ public class ActiveSession implements Serializable {
 
 	// Logout
 	public void logout() {
+		UserEJB.decreaseUserCount(activeUser);
 		this.render.setActive(false);
 		redirect();
 		this.activeUser = null;
 		this.activePlayList = null;
 		// this.userPlayLists.clear();
 		this.activeMusic = null;
+		
 		endSession();
 	}
 
@@ -673,15 +678,17 @@ public class ActiveSession implements Serializable {
 
 	// In�cio e Fim da sess�o http
 	public void startSession() {
+		
 		this.session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		this.session.setAttribute("sessionLoggedIn", true);
 	}
 
 	public void endSession() {
+		
 		if (this.session != null)
 			this.session.invalidate();
-		startSession();
+		
 		this.sessionLoggedIn = false;
 	}
 	// In�cio e Fim da sess�o http
