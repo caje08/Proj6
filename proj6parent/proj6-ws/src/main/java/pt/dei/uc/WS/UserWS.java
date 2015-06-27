@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.faces.convert.Converter;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -150,6 +149,8 @@ public class UserWS {
 		
 		return Response.status(200).build();		
 	}
+	
+	
 	
 	
 	

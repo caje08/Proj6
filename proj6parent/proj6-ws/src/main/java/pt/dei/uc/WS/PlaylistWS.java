@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -98,6 +100,24 @@ public class PlaylistWS {
 		
 		return Response.status(200).entity(requestedPlaylists).build();
 		
+	}
+	
+	@Path("/addsong")
+	@POST
+	@Produces("application/xml")
+	@Consumes("application/xml")
+	public Response addSongToPlaylist(MusicREST musicrest){
+		
+		return Response.status(200).build();
+	}
+	
+	@Path("/removesong")
+	@POST
+	@Produces("application/xml")
+	@Consumes("application/xml")
+	public Response removeSongFromPlaylist(MusicREST musicrest){
+		
+		return Response.status(200).build();
 	}
 	
 	
