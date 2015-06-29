@@ -15,14 +15,23 @@ import javax.ws.rs.core.Response;
 
 import pt.dei.uc.RESTentities.*;
 import pt.dei.uc.converter.ConverterEntityToWS;
+import pt.dei.uc.converter.ConverterWStoEntity;
 import dei.uc.pt.ar.paj.Entities.*;
+import dei.uc.pt.ar.paj.ejb.MusicEJB;
 import dei.uc.pt.ar.paj.ejb.PlaylistEJBLocal;
 import dei.uc.pt.ar.paj.ejb.UserEJBLocal;
+import dei.uc.pt.ar.paj.ejb.VirtualEJB;
 
 
 @Stateless
 @Path("/playlist-mgmt")
 public class PlaylistWS {
+	
+	@EJB
+	private MusicEJB musicejb;
+	
+	@EJB
+	private VirtualEJB virtualejb;
 	
 	@EJB
 	private UserEJBLocal userejb;
@@ -102,20 +111,31 @@ public class PlaylistWS {
 		
 	}
 	
-	@Path("/addsong")
+	@Path("/addsong/{playid: \\d+}/{songid: \\d+}")
 	@POST
 	@Produces("application/xml")
 	@Consumes("application/xml")
-	public Response addSongToPlaylist(MusicREST musicrest){
+	public Response addSongToPlaylist(@PathParam("songid")long songid, @PathParam("playid") long playid){
+		PlaylistEntity play = playlistejb.findByID(playid);
+		MusicEntity music = musicejb.getMusicByID(songid);
+		play.addMusicPlaylist(music);
+		
+		virtualejb.update(play);
 		
 		return Response.status(200).build();
 	}
 	
-	@Path("/removesong")
+	@Path("/removesong/{playid: \\d+}/{songid: \\d+}")
 	@POST
 	@Produces("application/xml")
 	@Consumes("application/xml")
-	public Response removeSongFromPlaylist(MusicREST musicrest){
+	public Response removeSongFromPlaylist(@PathParam("songid")long songid, @PathParam("playid") long playid){
+		PlaylistEntity play = playlistejb.findByID(playid);
+		MusicEntity music = musicejb.getMusicByID(songid);
+		play.getSongs().remove(music);		
+		play.setSongs(play.getSongs());
+		
+		virtualejb.update(play);
 		
 		return Response.status(200).build();
 	}

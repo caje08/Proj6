@@ -20,5 +20,18 @@ public class ConverterWStoEntity {
 		userent.setDatanascimento(userrest.getDatanascimento());
 		return userent;
 	}
+	
+	public static MusicEntity convertMusicRESTtoEntity(MusicREST musicrest){
+		MusicEntity musicent = new MusicEntity();
+		
+		musicent.setAlbum(musicrest.getAlbum());
+		musicent.setAnolancamento(musicrest.getAnolancamento());
+		musicent.setDatamusica(musicrest.getDatamusica());
+		musicent.setInterprete(musicrest.getInterprete());
+		musicent.setMusicid(musicrest.getMusicid());
+		musicent.setNomemusica(musicrest.getNomemusica());
+		
+		return musicent;
+	}
 
 }

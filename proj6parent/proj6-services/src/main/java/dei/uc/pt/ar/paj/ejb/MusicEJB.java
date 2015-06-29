@@ -237,6 +237,13 @@ public class MusicEJB implements MusicEJBLocal {
 		q.setParameter("searchTerm","%"+searchTerm+"%");
 		return q.getResultList();
 	}
+	
+	public MusicEntity getMusicByID(long id){
+		TypedQuery<MusicEntity> q;
+		q = em.createNamedQuery("Music.findByID", MusicEntity.class);
+		q.setParameter("musicid", id);
+		return q.getSingleResult();
+	}
 
 	@Override
 	public List<MusicEntity> searchByTrack(String searchTerm) {

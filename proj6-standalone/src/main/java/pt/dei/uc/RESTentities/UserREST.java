@@ -28,6 +28,17 @@ public class UserREST {
 
 	public UserREST() {		
 	}
+	
+	
+	public void getInfo(){
+		System.out.println("User Id: " + userid);
+		System.out.println("Name: " + name);
+		System.out.println("Email: " + email);
+		if(datanascimento!=""){
+			System.out.println("Birth Date: " + datanascimento);
+		}
+		System.out.println();
+	}
 
 	public long getUserid() {
 		return userid;

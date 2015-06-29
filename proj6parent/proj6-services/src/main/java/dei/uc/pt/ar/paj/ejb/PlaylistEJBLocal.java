@@ -15,4 +15,5 @@ public interface PlaylistEJBLocal {
 	 public void generatePlaylists();
 	 public List<PlaylistEntity> getPlaylists();
 	 public List<PlaylistEntity> findOrdered(PlaylistEntity.Ordering order, UserEntity owner);
+	 public PlaylistEntity findByID(long id);
 }

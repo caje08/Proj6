@@ -29,7 +29,14 @@ public class PlaylistREST {
 	}
 
 
-
+	public void getInfo(){
+		System.out.println();
+		System.out.println("Playlist ID: " + idplaylist);
+		System.out.println("Playlist Name: " + designacao);
+		System.out.println("Creation Date: " + datacriacao);
+		System.out.println("Owner of Playlist: " + utilizador.getName());
+	}
+	
 	public long getIdplaylist() {
 		return idplaylist;
 	}

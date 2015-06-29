@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 		@NamedQuery(name = "Playlist.orderByCreationDateDescending", query = "SELECT p FROM PlaylistEntity p WHERE p.utilizador = :ownerId ORDER BY p.datacriacao DESC"),
 		@NamedQuery(name = "Playlist.orderBySizeAscending", query = "SELECT p FROM PlaylistEntity p WHERE p.utilizador = :ownerId ORDER BY p.arraySize ASC"),
 		@NamedQuery(name = "Playlist.orderBySizeDescending", query = "SELECT p FROM PlaylistEntity p WHERE p.utilizador = :ownerId ORDER BY p.arraySize DESC"),
+		@NamedQuery(name= "Playlist.findByID", query = "select p from PlaylistEntity p where p.idplaylist = :id"),
 // @NamedQuery(name = "Playlist.orderByNoSongsAscending", query =
 // "SELECT p FROM PlaylistEntity p WHERE p.utilizador = :ownerId ORDER BY SIZE(p.songs) ASC"),
 // @NamedQuery(name = "Playlist.orderByNoSongsDescending", query =

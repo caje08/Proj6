@@ -19,6 +19,16 @@ public class MusicREST {
 	public MusicREST() {
 		
 	}
+	
+	public void getInfo(){
+		System.out.println();
+		System.out.println("Name: " + nomemusica);
+		System.out.println("Artist: " + interprete);
+		System.out.println("Album: " + album);
+		System.out.println("Year: " + anolancamento);
+		System.out.println("Type: " + tipomusica);
+		
+	}
 
 	public long getMusicid() {
 		return musicid;

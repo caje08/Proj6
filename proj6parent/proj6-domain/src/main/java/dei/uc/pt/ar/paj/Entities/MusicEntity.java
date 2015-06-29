@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 		@NamedQuery(name = "Music.findAll", query = "SELECT m FROM MusicEntity m"),
 		@NamedQuery(name = "Music.findByAlbum", query = "SELECT m FROM MusicEntity m WHERE m.album like :album"),
 		@NamedQuery(name = "Music.findByAno", query = "SELECT m FROM MusicEntity m WHERE m.anolancamento like :year"),
+		@NamedQuery(name = "Music.findByID", query = "select m from MusicEntity m where m.musicid = :musicid"),
 
 		// Search
 		@NamedQuery(name = "Music.findBySearch", query = "SELECT m FROM MusicEntity m WHERE LOWER(m.nomemusica) LIKE :searchTerm OR LOWER(m.interprete) LIKE :searchTerm"),

@@ -323,6 +323,18 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 
 		return playlists;
 	}
+	
+	public PlaylistEntity findByID(long id){
+		TypedQuery<PlaylistEntity> q = em.createNamedQuery("Playlist.findByID", PlaylistEntity.class);
+		q.setParameter("id", id);
+		try {
+			 return q.getSingleResult();
+			 } catch (Exception e) {
+			 System.err.println("Single result not found: " + e);
+			 return null;
+			 }
+		
+	}
 
 	public List<PlaylistEntity> findOrdered(PlaylistEntity.Ordering order, UserEntity owner) {
 		//	public List<PlaylistEntity> findOrdered() {        
