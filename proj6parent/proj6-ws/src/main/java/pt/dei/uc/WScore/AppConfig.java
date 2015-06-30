@@ -26,6 +26,7 @@ public class AppConfig extends Application{
 	    // resources.add(xpto.class);
 		resources.add(UserWS.class);
 		resources.add(PlaylistWS.class);
+		resources.add(MusicWS.class);
 		
 	}
 	

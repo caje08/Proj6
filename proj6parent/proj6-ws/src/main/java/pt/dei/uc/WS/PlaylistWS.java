@@ -40,7 +40,7 @@ public class PlaylistWS {
 	
 	@EJB PlaylistEJBLocal playlistejb;
 	public PlaylistWS() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	@GET
