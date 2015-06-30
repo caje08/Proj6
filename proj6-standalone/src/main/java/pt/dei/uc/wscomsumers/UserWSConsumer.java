@@ -130,6 +130,25 @@ public class UserWSConsumer {
 		
 	}
 	
+	public static void addUser(UserREST user){
+		ResteasyClient client = new ResteasyClientBuilder().build();		
+			
+		ResteasyWebTarget target = client
+				.target("http://localhost:9001/proj6-ws/rest/user-mgmt/adduser");
+		
+		Response response = target.request(MediaType.APPLICATION_XML).post(
+				Entity.entity(user, "application/xml"));
+		
+		if (response.getStatus() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : "
+					+ response.getStatus());
+		}
+		
+		System.out.println("User added successfully!");
+		
+		
+	}
+	
 	public static void editUserPassword(int id, String password){
 		
 		ResteasyClient client = new ResteasyClientBuilder().build();

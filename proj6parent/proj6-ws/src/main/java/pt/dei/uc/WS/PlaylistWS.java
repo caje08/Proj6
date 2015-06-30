@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -18,6 +19,7 @@ import pt.dei.uc.converter.ConverterEntityToWS;
 import pt.dei.uc.converter.ConverterWStoEntity;
 import dei.uc.pt.ar.paj.Entities.*;
 import dei.uc.pt.ar.paj.ejb.MusicEJB;
+import dei.uc.pt.ar.paj.ejb.MusicEJBLocal;
 import dei.uc.pt.ar.paj.ejb.PlaylistEJBLocal;
 import dei.uc.pt.ar.paj.ejb.UserEJBLocal;
 import dei.uc.pt.ar.paj.ejb.VirtualEJB;
@@ -28,9 +30,9 @@ import dei.uc.pt.ar.paj.ejb.VirtualEJB;
 public class PlaylistWS {
 	
 	@EJB
-	private MusicEJB musicejb;
+	private MusicEJBLocal musicejb;
 	
-	@EJB
+	@Inject
 	private VirtualEJB virtualejb;
 	
 	@EJB
@@ -112,9 +114,8 @@ public class PlaylistWS {
 	}
 	
 	@Path("/addsong/{playid: \\d+}/{songid: \\d+}")
-	@POST
+	@GET
 	@Produces("application/xml")
-	@Consumes("application/xml")
 	public Response addSongToPlaylist(@PathParam("songid")long songid, @PathParam("playid") long playid){
 		PlaylistEntity play = playlistejb.findByID(playid);
 		MusicEntity music = musicejb.getMusicByID(songid);
@@ -126,9 +127,8 @@ public class PlaylistWS {
 	}
 	
 	@Path("/removesong/{playid: \\d+}/{songid: \\d+}")
-	@POST
+	@GET
 	@Produces("application/xml")
-	@Consumes("application/xml")
 	public Response removeSongFromPlaylist(@PathParam("songid")long songid, @PathParam("playid") long playid){
 		PlaylistEntity play = playlistejb.findByID(playid);
 		MusicEntity music = musicejb.getMusicByID(songid);

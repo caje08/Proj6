@@ -22,6 +22,7 @@ public class MusicREST {
 	
 	public void getInfo(){
 		System.out.println();
+		System.out.println("Song Id: " + musicid);
 		System.out.println("Name: " + nomemusica);
 		System.out.println("Artist: " + interprete);
 		System.out.println("Album: " + album);

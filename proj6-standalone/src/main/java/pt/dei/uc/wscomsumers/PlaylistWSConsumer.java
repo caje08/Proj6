@@ -2,6 +2,7 @@ package pt.dei.uc.wscomsumers;
 
 import pt.dei.uc.RESTentities.*;
 
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -26,9 +27,8 @@ public class PlaylistWSConsumer {
 			Response response = target.request().get();
 			System.out.println("The App has "
 					+ response.readEntity(String.class) + " playlists.");
-		} catch (NullPointerException e) {
-			System.out.println("Could not connect to client!");
-			e.printStackTrace();
+		} catch (ProcessingException e) {
+			System.out.println("Could not connect to WebService!");
 		}
 	}
 
@@ -47,9 +47,9 @@ public class PlaylistWSConsumer {
 				play.getInfo();
 			}
 
-		} catch (NullPointerException e) {
-			System.out.println("Could not connect to client!");
-			e.printStackTrace();
+		} catch (ProcessingException e) {
+			System.out.println("Could not connect to WebService!");
+			
 		}
 
 	}
@@ -72,10 +72,10 @@ public class PlaylistWSConsumer {
 			for (MusicREST music : musicsrest.getMusics()) {
 				music.getInfo();
 			}
-		} catch (NullPointerException e) {
+		} catch (ProcessingException e) {
 
-			System.out.println("Could not connect to client!");
-			e.printStackTrace();
+			System.out.println("Could not connect to WebService!");
+			
 		}
 
 	}
@@ -101,10 +101,10 @@ public class PlaylistWSConsumer {
 				play.getInfo();
 			}
 
-		} catch (NullPointerException e) {
+		} catch (ProcessingException e) {
 
-			System.out.println("Could not connect to client!");
-			e.printStackTrace();
+			System.out.println("Could not connect to WebService!");
+			
 
 		}
 
@@ -135,10 +135,10 @@ public class PlaylistWSConsumer {
 
 			System.out.println("The song was added successfully!");
 
-		} catch (NullPointerException e) {
+		} catch (ProcessingException e) {
 
-			System.out.println("Could not connect to client!");
-			e.printStackTrace();
+			System.out.println("Could not connect to WebService!");
+			
 
 		}
 
@@ -168,10 +168,10 @@ public class PlaylistWSConsumer {
 
 			System.out.println("The song was removed successfully!");
 
-		} catch (NullPointerException e) {
+		} catch (ProcessingException e) {
 
-			System.out.println("Could not connect to client!");
-			e.printStackTrace();
+			System.out.println("Could not connect to WebService!");
+			
 
 		}
 

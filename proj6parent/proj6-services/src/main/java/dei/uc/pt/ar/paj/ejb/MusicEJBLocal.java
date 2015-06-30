@@ -17,4 +17,5 @@ public interface MusicEJBLocal {
 	public List<MusicEntity> search(String searchTerm);
 	public List<MusicEntity> searchByTrack(String searchTerm);
 	public List<MusicEntity> searchByArtist(String searchTerm);
+	public MusicEntity getMusicByID(long songid);
 }
