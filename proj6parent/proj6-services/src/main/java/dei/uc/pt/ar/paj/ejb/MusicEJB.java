@@ -73,23 +73,18 @@ public class MusicEJB implements MusicEJBLocal {
 	@Override
 	public List<MusicEntity> getMusicas() {
 		// List<String> usernames = new LinkedList<>();
-		logger.trace("Trace Antes getMusicas()");
-		logger.debug("Sample Antes debug message");
-		logger.info("Sample Antes info message");
-		logger.warn("Sample Antes warn message");
-		logger.error("Sample Antes error message");
+		
+		logger.info("Inside MusicEJB.getMusicas() and before getResultList()");
+		
 		System.out.println("Antes de criar a query");
 		System.out.println("Entrou no getMusicas() no MusicEJB e está antes da Query");
 		Query q = em.createQuery("from MusicEntity m");
 		List<MusicEntity> musicas = q.getResultList();
 
 		System.out.println("Depois de apresentar os resultados");
-		logger.trace("Trace Depois getUsers()");
-		logger.debug("Sample Depois debug message");
-		logger.info("Sample Depois info message");
-		logger.warn("Sample Depois warn message");
-		logger.error("Sample Depois error message");
-
+		
+		logger.info("Inside MusicEJB.getMusicas() and after getResultList()");
+		
 		// for (User u : users) {
 		// usernames.add(u.toString());
 		// }

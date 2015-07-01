@@ -161,8 +161,11 @@ public class MusicEntity implements Serializable {
 	private boolean lyricExist;
 	
 	@Column(name = "mylyricversion")
-	private boolean mylyricversion;	
+	private String mylyricversion;	
 
+	@Column(name = "changeoriginal")
+	private boolean changeoriginal;
+	
 	//@OneToMany(mappedBy = "music", orphanRemoval = true)
     //private List<LyricEntity> lyrics;
 	// private LyricEntity lyrics;
@@ -198,6 +201,8 @@ public class MusicEntity implements Serializable {
 		this.tipomusica = tipomusica;
 		this.length = 0;
 		this.lyricExist=false;
+		this.changeoriginal=false;
+		this.mylyricversion="";
 		this.playlists = new ArrayList<PlaylistEntity>();
 	}
 
@@ -217,6 +222,15 @@ public class MusicEntity implements Serializable {
 		this.musicid = musicid;
 	}
 
+	
+	public boolean isChangeoriginal() {
+		return changeoriginal;
+	}
+
+	public void setChangeoriginal(boolean changeoriginal) {
+		this.changeoriginal = changeoriginal;
+	}
+
 	public String getOriginalLyric() {
 		return originalLyric;
 	}
@@ -225,11 +239,11 @@ public class MusicEntity implements Serializable {
 		this.originalLyric = originalLyric;
 	}
 
-	public boolean isMylyricversion() {
+	public String getMylyricversion() {
 		return mylyricversion;
 	}
 
-	public void setMylyricversion(boolean mylyricversion) {
+	public void setMylyricversion(String mylyricversion) {
 		this.mylyricversion = mylyricversion;
 	}
 

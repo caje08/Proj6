@@ -15,9 +15,11 @@ import javax.ws.rs.core.Response;
 
 import pt.dei.uc.RESTentities.*;
 import pt.dei.uc.converter.*;
-import dei.uc.pt.ar.paj.Entities.UserEntity;
-import dei.uc.pt.ar.paj.Facade.*;
 import dei.uc.pt.ar.paj.ejb.*;
+import dei.uc.pt.ar.paj.Entities.UserEntity;
+import dei.uc.pt.ar.paj.Facade.UserFacade;
+import dei.uc.pt.ar.paj.ejb.UserEJBLocal;
+
 
 
 @Stateless

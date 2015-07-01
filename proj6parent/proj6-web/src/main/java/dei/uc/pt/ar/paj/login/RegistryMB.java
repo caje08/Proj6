@@ -139,14 +139,16 @@ public class RegistryMB {
 				this.newUser = new UserEntity();
 				this.newUser.setEmail(email);
 				this.newUser.setName(name);
+				this.newUser.setRole("appuser");
 				this.newUser.setPassword(pw.encrypt(password));
 				this.newUser.setDatanascimento(datanascimento);
 				try {
 					this.userFacade.create(newUser);
 					loginMB.setEmail(email);
 					loginMB.setPassword(password);
-					logger.info("Utilizador com email="+email+" criado com sucesso na BD!!");
-					loginMB.doLogin();
+					logger.info("Em RegistryMB(), Utilizador com email="+email+"  criado com sucesso na BD!!");
+					//loginMB.doLogin();
+					loginMB.login();
 				} catch (Exception e) {
 					errorMessage = "Could not create user due to: "
 							+ e.getCause().getMessage();
@@ -154,8 +156,8 @@ public class RegistryMB {
 					return "registry";
 
 				}
-				System.out.println("Vai para a pag=login");
-				return "index"; //não corre este comando pois o "searchUser()" faz login (criando a sessão) e retorna à pág. "index"
+				System.out.println("Vai para a page do login");
+				return "/pages/index"; //não corre este comando pois o "searchUser()" faz login (criando a sessão) e retorna à pág. "index"
 			} else {
 				this.errorMessage = "Passwords don't match!";
 				logger.error(this.errorMessage);

@@ -70,7 +70,7 @@ public class LoginMBTest {
 		when(tq.getSingleResult()).thenReturn(userentity);
 		userentity=userfacade.findByEmailPass(email, password);
 
-		Assert.assertEquals(loginMB.searchUser(), "login");
+		Assert.assertEquals(loginMB.searchUser(), "/login");
 		Assert.assertEquals(loginMB.getErrorMessage(),"Email/Password combination not found! Please try again");
 	}
 

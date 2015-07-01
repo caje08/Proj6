@@ -35,11 +35,11 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 	private UserEJB teste;
 	private PlaylistEntity.Ordering order; 
 
-	private UserEntity usertmp1= new UserEntity("Carlos", "40bd001563085fc35165329ea1ff5c5ecbdbbeef", "carlosantos3@gmail.com",
+	private UserEntity usertmp1= new UserEntity("Carlos", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "carlosantos3@gmail.com",
 			"1970/06/13"); //pass 123
-	private UserEntity	usertmp2 = new UserEntity("Duarte", "51eac6b471a284d3341d8c0c63d0f1a286262a18", "duarte3@gmail.com",
+	private UserEntity	usertmp2 = new UserEntity("Duarte", "s6jg4fmrG/46NvIx9nb3i7MKUZ0rIebFMMDu6Ou0pdA=", "duarte3@gmail.com",
 			"1985/10/21"); //pass 456
-	private UserEntity	usertmp3 = new UserEntity("Admin", "d033e22ae348aeb5660fc2140aec35850c4da997", "admin@admin",
+	private UserEntity	usertmp3 = new UserEntity("Admin", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", "admin@admin",
 			"1985/10/21"); //pass 456
 
 	private ArrayList<MusicEntity> musics=new ArrayList<MusicEntity>();
@@ -131,25 +131,13 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 
 	private void generateMusics() {
 		int i;
-		//		this.date = new Date();
-		//		List<UserEntity> arrusers = null;
-		// arrusers=userejb.getUsers();
-		// String nomemusica,
-		// String interprete,
-		// String album,
-		// String anolancamento,
-		// UserEntity owner,
-		// String path,
-		// String datamusica,
-		// String tipomusica
+		
 
 		for (i = 0; i < 10; i++) {
 			MusicEntity m = new MusicEntity("Track" + i, "The Shins",
 					"Port of Morrow", "2015", usertmp1, "path",
 					"2015/05/28", "Generico");
-			// MusicEntity m1=new MusicEntity("Track"+i, "The Shins",
-			// "Port of Morrow", "2015", arrusers.get(0), "path", "2015/05/28",
-			// "Gen�rico");
+			
 			musics.add(m);
 			em.persist(m);
 		}
@@ -183,17 +171,7 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 	public void populatePlaylist() {
 
 		ArrayList<MusicEntity> musics = new ArrayList<MusicEntity>();
-		//		List<UserEntity> lstusers=null;
-
-		//		dataddmusic = "2015/01/10";
-		//		System.out.println("Users.size="+lstusers.size());
-		//		lstusers=teste.getUsers();
-		//		System.out.println("Users.size="+lstusers.size());
-		//		usertmp1=lstusers.get(1);
-		//		System.out.println("User1="+usertmp1.getEmail());
-		//		usertmp2=lstusers.get(2);
-		//		System.out.println("User1="+usertmp2.getEmail());
-		//		
+		
 		usertmp1 = new UserEntity("Carlos", "123", "carlosantos3@gmail.com",
 				"1970/06/13");
 		usertmp2 = new UserEntity("Duarte", "456", "duarte3@gmail.com",
@@ -299,27 +277,17 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 
 	@Override
 	public List<PlaylistEntity> getPlaylists() {
-		// List<String> usernames = new LinkedList<>();
-		logger.trace("Trace Antes getPlaylists()");
-		logger.debug("Sample Antes debug message");
-		logger.info("Sample Antes info message");
-		logger.warn("Sample Antes warn message");
-		logger.error("Sample Antes error message");
+		
+		logger.info("Before getPlaylists().getResultList inside PlaylistEJB.class");
+		
 		System.out.println("Antes de criar a query");
 
 		Query q = em.createQuery("from PlaylistEntity p");
 		List<PlaylistEntity> playlists = q.getResultList();
 
 		System.out.println("Depois de apresentar os resultados");
-		logger.trace("Trace Depois getPlaylists()");
-		logger.debug("Sample Depois debug message");
-		logger.info("Sample Depois info message");
-		logger.warn("Sample Depois warn message");
-		logger.error("Sample Depois error message");
-
-		// for (User u : users) {
-		// usernames.add(u.toString());
-		// }
+		
+		logger.info("After getPlaylists().getResultList inside PlaylistEJB.class");		
 
 		return playlists;
 	}

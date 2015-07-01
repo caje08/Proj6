@@ -8,7 +8,7 @@ package dei.uc.pt.ar.paj.login;
 
 import java.io.IOException;
 import java.io.Serializable;
-
+import dei.uc.pt.ar.paj.util.UtilMessage;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -16,6 +16,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -124,7 +126,7 @@ public class LoginMB implements Serializable{
 				this.password="";
 				this.email="";
 				logger.error(this.errorMessage);
-				return "login";
+				return "/login";
 			}
 		} catch (Exception pe) {
 		//	System.out.println(pe.getMessage());
@@ -132,7 +134,7 @@ public class LoginMB implements Serializable{
 			this.errorMessage = "Email/Password combination not found! Please try again";
 			this.password="";
 			this.email="";
-			return "login";
+			return "/login";
 		}    	
 
 		if(!(tmp.equals(null))){
@@ -140,18 +142,18 @@ public class LoginMB implements Serializable{
 			if (userSession.getLoggedUser() != null) {
 				logger.info("Logged_user= "+this.email);
 				session.init(tmp);
-				redirect();        	
+				//redirect();        	
 				//        	doLogin(0);  
-				return "index";
+				return "/pages/index";
 			} else {
 				this.errorMessage = "Email/Password combination not found! Please try again";
 				logger.error(this.errorMessage);
-				return "login";
+				return "/login";
 			}
 		}else {
 			this.errorMessage = "Email/Password combination not found! Please try again";
 			logger.error(this.errorMessage);
-			return "login";
+			return "/login";
 		}
 		//    	String passw=pw.encrypt(password);
 		//    	UserEntity usertmp1=null;
@@ -183,18 +185,18 @@ public class LoginMB implements Serializable{
 	public void logged() throws IOException{
 		if(userSession.getLoggedUser() != null){
 			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-			ec.redirect(ec.getRequestContextPath() + "index.xhtml");
+			ec.redirect(ec.getRequestContextPath() + "/pages/index.xhtml");
 		}
 	}
 
 	public void notLogged() throws IOException {
 		if (userSession.getLoggedUser() == null) {
 			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-			ec.redirect(ec.getRequestContextPath() + "/faces/login.xhtml");
+			ec.redirect(ec.getRequestContextPath() + "/login.xhtml");
 		}            
 	}
 
-	public String logout() {
+	public String oldlogout() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
 				
@@ -204,9 +206,11 @@ public class LoginMB implements Serializable{
 	public UserEntity getLoggedUser(){
 		return userSession.getLoggedUser();
 	}
+
 	
 	public void doLogin(){		
 		searchUser();		
+
 	}
 
 	private void redirect(){
@@ -224,4 +228,33 @@ public class LoginMB implements Serializable{
 
 	}
 
+	public String login(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
+		
+		try{
+			logger.info("Email = "+email+", passwd="+password+" combination");
+			request.login(email, password);
+			searchUser();
+		}catch (ServletException e){
+			UtilMessage.addErrorMessage("Login Failed.");
+			logger.error("Wrong Email = "+email+", passwd="+password+" combination");
+			this.errorMessage = "Email/Password combination not found! Please try again";
+			return "/login";
+		}
+		return "/pages/index";
+	}
+	public String logout(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
+		
+		try{
+			request.logout();
+			
+		}catch (ServletException e){
+			UtilMessage.addErrorMessage("Logout Failed.");			
+		}
+		return "/login.xhtml?faces-redirect=true";
+	}
+	
 }

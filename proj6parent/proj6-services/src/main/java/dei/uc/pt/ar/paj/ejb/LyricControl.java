@@ -16,8 +16,10 @@ import javax.xml.xpath.XPathExpressionException;
 import org.xml.sax.SAXException;
 
 import dei.uc.pt.ar.paj.Entities.LyricEntity;
+import dei.uc.pt.ar.paj.Entities.LyricEntityId;
 import dei.uc.pt.ar.paj.Entities.MusicEntity;
 import dei.uc.pt.ar.paj.Entities.PlaylistEntity;
+import dei.uc.pt.ar.paj.Entities.UserEntity;
 import dei.uc.pt.ar.paj.Facade.LyricFacade;
 import dei.uc.pt.ar.paj.Facade.MusicFacade;
 
@@ -131,6 +133,69 @@ public class LyricControl implements Serializable {
 		this.musicId = musicId;
 	}
 
+	public String getLyricsToMusic(MusicEntity m, String site) throws Exception, Throwable, SAXException, IOException {	
+		switch (site) {
+		case "getLyricsoap":
+			this.originalLyric = webServiceControl.getSoapLyricMusic(m);
+			break;
+		case "getLyricrest":
+			this.originalLyric = webServiceControl.getMusicRESTResult(m);
+			break;
+		case "getLikiwiki": {				
+			this.originalLyric = webServiceControl.getLyricWikiRESTResult(m);
+			}
+			break;
+		}
+		music = m;
+		update = true;
+		return this.originalLyric;
+	}
+	
+public String callGetLyricsService(MusicEntity m, String site) throws Exception, Throwable, SAXException, IOException {
+		
+		if (!lyricFacade.existLyric(m, playlistentity.getUtilizador())) {
+			
+			switch (site) {
+			case "getLyricsoap":
+				this.originalLyric = webServiceControl.getSoapLyricMusic(m);
+				break;
+			case "getLyricrest":
+				this.originalLyric = webServiceControl.getMusicRESTResult(m);
+				break;
+			case "getLikiwiki": {				
+				this.originalLyric = webServiceControl.getLyricWikiRESTResult(m);
+				}
+				break;
+			}
+			music = m;
+			update = false;
+			//return this.originalLyric;
+		}else {
+			try {
+				this.selectLyric = lyricFacade.findLyric(m,
+						playlistentity.getUtilizador());
+				switch (site) {
+				case "getLyricsoap":
+					this.originalLyric = webServiceControl.getSoapLyricMusic(m);
+					break;
+				case "getLyricrest":
+					this.originalLyric = webServiceControl.getMusicRESTResult(m);
+					break;
+				case "getLikiwiki": {				
+						this.originalLyric = webServiceControl.getLyricWikiRESTResult(m);
+					}
+					break;
+				}
+				music = m;
+				update = true;
+			} catch (Exception ex) {
+				Logger.getLogger(LyricControl.class.getName()).log(
+						Level.SEVERE, null, ex);
+			}
+		}
+		return this.originalLyric;
+	}
+	
 	public void callLyricsService(MusicEntity m, String site) {
 		
 		if (!lyricFacade.existLyric(m, playlistentity.getUtilizador())) {
@@ -283,15 +348,17 @@ public class LyricControl implements Serializable {
 		}
 	}
 
-	public void prepareEdit(MusicEntity m) throws Exception {
-		if (!lyricFacade.existLyric(m, playlistentity.getUtilizador())) {
+	public String prepareEdit(MusicEntity m, UserEntity user) throws Exception {
+		String saida="";
+		
+		if (!lyricFacade.existLyric(m, user)) {
 			lyricWikiREST(m);
 			update = false;
 		} else {
 			try {
 				this.selectLyric = lyricFacade.findLyric(m,
 						playlistentity.getUtilizador());
-				this.originalLyric = selectLyric.getTextLyric();
+				saida = selectLyric.getTextLyric();
 				music = m;
 				update = true;
 			} catch (Exception ex) {
@@ -300,21 +367,24 @@ public class LyricControl implements Serializable {
 				System.out.println("No original lyric is available! ");
 			}
 		}
+		return saida;
 	}
 
 	public void save() {
-//		if (update) {
-//			LyricEntity updatedLyric = selectLyric;
-//			updatedLyric.setTextLyric(originalLyric);
-//			lyricFacade.editLyric(updatedLyric);
-//
-//		} else {
-//			lyric = new LyricEntity();
+		if (update) {
+			LyricEntity updatedLyric = selectLyric;
+			updatedLyric.setTextLyric(originalLyric);
+			lyricFacade.editLyric(updatedLyric);
+
+		} else {
+			LyricEntityId lyricid = new LyricEntityId(playlistentity.getUtilizador().getUserId(),music.getMusicid());
+			lyric = new LyricEntity();
 //			lyric.setUtilizador(playlistentity.getUtilizador());
 //			lyric.setMusic(music);
-//			lyric.setTextLyric(originalLyric);
-//			lyricFacade.create(lyric);
-//		}
-//		update = false;
+			lyric.setId(lyricid);
+			lyric.setTextLyric(originalLyric);
+			lyricFacade.create(lyric);
+		}
+		update = false;
 	}
 }

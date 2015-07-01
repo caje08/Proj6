@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+<h:body>
+	<ui:composition>
+
+		<!-- PlayList Editor -->
+	
+
+			<h2>Playlist: #{activeSession.activePlayList.designacao}</h2>
+
+			
+				<p:commandButton action="#" value="testDialog" type="button"
+					onclick="PF('dlg1').show(); return false;" />
+
+				<p:dialog widgetVar="dlg1">
+					<h:form>
+						<h:outputText value="True Resistance to PrimeFaces is futile!" />
+						<h:panelGrid columns="1" cellpadding="5">
+							<p:commandButton value="Basic" type="button"
+								onclick="PF('dlg2').show();" />
+						</h:panelGrid>
+					</h:form>
+				</p:dialog>
+
+				<p:dialog widgetVar="dlg2">
+					<h:form>
+						<h:outputText value="#{testController.test}" />
+						<p:commandButton value="Call method"
+							actionListener="#{testController.testMethod}" />
+					</h:form>
+				</p:dialog>
+			
+			
+			<br />
+
+			
+	</ui:composition>
+
+</h:body>
+</html>
