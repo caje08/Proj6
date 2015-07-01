@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
 <h:body>
 	<ui:composition>
 
@@ -92,34 +93,15 @@
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Lyryc " />
+						<h:outputText value="Lyric Text" />
 					</f:facet>
-					<h:commandButton
-						action="#"
-						value="get" />
-				</h:column>
-				
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Text " />
-					</f:facet>
-					<h:commandButton
-						action="#"
-						value="edit" />
-				</h:column>
-				
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="" />
-					</f:facet>
-					<h:commandButton
-						action="#"
-						value="delete lyryc" />
+					<h:commandButton rendered="#{music.lyricExist}"
+						action="#{activeSession.editThisLyric(music,1)}" value="Read/Edit" />
 				</h:column>
 
 			</h:dataTable>
-			
-			<br/>
+
+			<br />
 
 			<table>
 				<tr>
@@ -128,16 +110,63 @@
 					<td><h:inputText style="input_text"
 							value="#{activeSession.activePlayList.designacao}" /></td>
 
-					<td><h:commandButton action="#{activeSession.saveChangesToPlayList()}"
-							value="Save" /></td>
+					<td><h:commandButton
+							action="#{activeSession.saveChangesToPlayList()}" value="Save" /></td>
 				</tr>
 			</table>
-			
+
 		</h:form>
 
+		<!-- Edit Music Lyric text in Browser -->
+		<h:form id="lyrics" rendered="#{render.editLyric}">
+
+			<div>
+				<h3 style="display: inline-block; font-size: 12pt;color: green">Lyric from
+					Music :</h3>
+				#{activeSession.activeMusic.nomemusica}
+			
+				<h3 style="display: inline-block; font-size: 12pt; color: green">Artist
+					:</h3>
+				#{activeSession.activeMusic.interprete}
+			
+				<h3 style="display: inline-block; font-size: 12pt; color: green">Album :</h3>
+				#{activeSession.activeMusic.album}
+			</div>
+
+			<table>
+				<tr>
+					<td><label>Original Lyric :</label></td>
+
+					<td><h:inputTextarea id="origLy" styleClass="inputbox" readonly="true"
+							value="#{activeSession.activeMusic.originalLyric}" /></td>
+				</tr>
+			</table>
+			<br />
+			<br />
+			<table>
+				<tr>
+					<td><label>MyLyric Version :</label></td>
+
+					<td><h:inputTextarea id="myLy" styleClass="inputbox"
+							value="#{activeSession.showmylyric}" /></td>
+				</tr>
+			</table>
+			<table>
+				<tr></tr>
+				<tr>
+					<td><h:commandButton
+							action="#{activeSession.saveLyricMusicChanges()}" value="Save" /></td>
+					<td><h:commandButton
+							action="#{activeSession.cancelLyricMusicChanges()}"
+							value="Cancel" /></td>
+				</tr>
+			</table>
+
+		</h:form>
 
 		<!-- Music Library Browser -->
-		<h:form id="musics" rendered="#{!render.editPlayList}">
+		<h:form id="musics"
+			rendered="#{!render.editPlayList and !render.editLyric}">
 
 			<h2>Library:</h2>
 
@@ -154,8 +183,10 @@
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Track " />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(1)}" value="&#8593;" />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(2)}" value="&#8595;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(1)}"
+							value="&#8593;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(2)}"
+							value="&#8595;" />
 					</f:facet>
 					<h:commandButton value="#{music.nomemusica}" />
 				</h:column>
@@ -163,8 +194,10 @@
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Artist " />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(3)}" value="&#8593;" />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(4)}" value="&#8595;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(3)}"
+							value="&#8593;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(4)}"
+							value="&#8595;" />
 					</f:facet>
 					<h:commandButton value="#{music.interprete}" />
 				</h:column>
@@ -172,8 +205,10 @@
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Time " />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(5)}" value="&#8593;" />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(6)}" value="&#8595;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(5)}"
+							value="&#8593;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(6)}"
+							value="&#8595;" />
 					</f:facet>
 					<h:commandButton value="#{music.length}" />
 				</h:column>
@@ -181,8 +216,10 @@
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Album " />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(7)}" value="&#8593;" />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(8)}" value="&#8595;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(7)}"
+							value="&#8593;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(8)}"
+							value="&#8595;" />
 					</f:facet>
 					<h:commandButton value="#{music.album}" />
 				</h:column>
@@ -190,8 +227,10 @@
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Added " />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(9)}" value="&#8593;" />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(10)}" value="&#8595;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(9)}"
+							value="&#8593;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(10)}"
+							value="&#8595;" />
 					</f:facet>
 					<h:commandButton value="#{music.datamusica}" />
 				</h:column>
@@ -199,8 +238,10 @@
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="User " />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(11)}" value="&#8593;" />
-						<h:commandLink action="#{activeSession.sortMusicLibrary(12)}" value="&#8595;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(11)}"
+							value="&#8593;" />
+						<h:commandLink action="#{activeSession.sortMusicLibrary(12)}"
+							value="&#8595;" />
 					</f:facet>
 					<h:commandButton action="#{activeSession.editThisMusic(music)}"
 						value="#{activeSession.userPresentationMusic(music)}" />
@@ -214,13 +255,12 @@
 						action="#{activeSession.addMusicToPlayListStart(music)}"
 						value="Add to Playlist" />
 				</h:column>
-				
+
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Lyric Available" />
+						<h:outputText value="Lyric Exists" />
 					</f:facet>
-					<h:outputText
-						value="#{music.lyricExist}" />
+					<h:commandButton disabled="true" value="#{music.lyricExist}" />
 				</h:column>
 
 			</h:dataTable>

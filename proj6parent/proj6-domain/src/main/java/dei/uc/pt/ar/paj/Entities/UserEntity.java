@@ -49,6 +49,9 @@ public class UserEntity implements Serializable {
 	@NotNull
 	@Column(name = "datanascimento")
 	private String datanascimento;
+	@NotNull
+	@Column(name = "role")
+	private String role;
 
 	@OneToMany(mappedBy = "utilizador")
 	private List<PlaylistEntity> userplaylists;
@@ -56,8 +59,8 @@ public class UserEntity implements Serializable {
 	@OneToMany(mappedBy = "utilizador")
 	private List<MusicEntity> usermusicas;
 	
-//	@OneToMany(mappedBy = "utilizador", orphanRemoval = true)
-//    private LyricEntity userlyrics;
+//	@OneToMany(mappedBy = "id.utilizador", orphanRemoval = true)
+//    private List<LyricEntity> userlyrics;
 
 	static Logger logger = LoggerFactory.getLogger(UserEntity.class);
 
@@ -71,7 +74,7 @@ public class UserEntity implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.datanascimento = dtnasc;
-
+		this.role="appuser";
 	}
 
 	public Long getUserId() {
@@ -90,8 +93,17 @@ public class UserEntity implements Serializable {
 //		this.userlyrics = lyrics;
 //	}
 
+	
 	public String getDatanascimento() {
 		return datanascimento;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public void setDatanascimento(String datanascimento) {

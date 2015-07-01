@@ -21,6 +21,42 @@
 		<session-timeout>30</session-timeout>
 	</session-config>
 	<welcome-file-list>
-		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>login.xhtml</welcome-file>
 	</welcome-file-list>
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>proj6</realm-name>
+		<form-login-config>
+		  <form-login-page>/login.xhtml</form-login-page> 
+		  <form-error-page>/login.xhtml</form-error-page>
+		</form-login-config>		
+	</login-config>
+	<security-constraint>
+		<display-name>Admin Pages</display-name>
+		<web-resource-collection>
+			<web-resource-name>Protected Admin Area</web-resource-name>
+			<description></description>
+			<url-pattern>/proj6-web/pages/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>PUT</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description />
+			<role-name>appuser</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>       <!-- CONFIDENTIAL? -->
+		</user-data-constraint>
+	</security-constraint>
+
+	<security-role>
+		<role-name>appuser</role-name>
+	</security-role>
+	
+	
 </web-app>

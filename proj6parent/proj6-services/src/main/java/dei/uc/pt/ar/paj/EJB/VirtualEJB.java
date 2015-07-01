@@ -13,10 +13,16 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import dei.uc.pt.ar.paj.Entities.LyricEntity;
+import dei.uc.pt.ar.paj.Entities.LyricEntityId;
 import dei.uc.pt.ar.paj.Entities.MusicEntity;
 import dei.uc.pt.ar.paj.Entities.PlaylistEntity;
 import dei.uc.pt.ar.paj.Entities.UserEntity;
 import dei.uc.pt.ar.paj.Entities.MusicEntity.Ordering;
+import dei.uc.pt.ar.paj.Facade.LyricFacade;
 import dei.uc.pt.ar.paj.Facade.MusicFacade;
 import dei.uc.pt.ar.paj.Facade.PlaylistFacade;
 import dei.uc.pt.ar.paj.Facade.UserFacade;
@@ -44,6 +50,10 @@ public class VirtualEJB implements Serializable {
 
 	private MusicEntity.Ordering orderMusic;
 
+	@EJB
+	private LyricFacade lyricFacade;
+	private LyricEntity lyricentity;
+	private LyricEntityId lyricentityid;
 
 	@EJB
 	private PlaylistEJBLocal playlistEJB;
@@ -51,7 +61,9 @@ public class VirtualEJB implements Serializable {
 	private PlaylistFacade playlistFacade;
 
 	private PlaylistEntity.Ordering orderPlayList;
-
+	
+	static Logger logger = LoggerFactory.getLogger(VirtualEJB.class);
+	
 	public void populate() {
 	}
 
@@ -255,10 +267,66 @@ public class VirtualEJB implements Serializable {
 		// adiciona uma nova Musica � BD
 		this.musicFacade.merge(music);
 	}
+	public void addLyric(LyricEntity lyric, boolean create) {
+		// adiciona uma nova Lyric � BD
+		if(create){
+			this.lyricFacade.create(lyric);
+		}
+		else{
+			this.lyricFacade.merge(lyric);
+		}
+	}
 
 	public void update(MusicEntity music) {
 		// actualiza os dados na BD
-		this.musicFacade.edit(music);
+		this.musicFacade.edit(music);		
+	}
+	
+	public String getLyricfromFacade(MusicEntity music, UserEntity user){
+		String lversion="";
+		lyricentity=lyricFacade.existUserLyricText(music, user);
+		
+		if(lyricentity!=null){
+			logger.info("Em VirtualEJB.getLyricfromFacade() lyricentity="+lyricentity.toString());
+		  lversion=lyricentity.getTextLyric();
+		  logger.info("VirtualEJB.getLyricfromFacade() for User = "+user.getName()+" and Music= "+music.getNomemusica()+"shows Lyric Version="+lversion);
+		}
+		else{
+			lversion="error";
+			
+			logger.error("VirtualEJB.getLyricfromFacade() --> User não tem ainda uma lyric associada à música "+music.getNomemusica());
+		}
+		
+		return lversion;
+	}
+	
+	public void updateLyric(MusicEntity music, UserEntity user, boolean creatnewlyric, String mylyric){
+		
+		//lyricentity=lyricFacade.existUserLyricText(music, user);
+		//lyricentity=new LyricEntity();
+		System.out.println("Music id="+music.toString());
+		System.out.println("Music interprete="+music.getInterprete());
+		System.out.println("Music mylyricversion="+music.getMylyricversion());
+		System.out.println("Music originallyric="+music.getOriginalLyric());
+		System.out.println("User name="+user.getName());
+		System.out.println("User email="+user.getEmail());
+		System.out.println("User id="+user.getUserId());
+
+		lyricentityid = new LyricEntityId(music.getMusicid(),user.getUserId());
+		lyricentity=new LyricEntity();
+		lyricentity.setId(lyricentityid);
+		logger.info("VirtualEJB.updateLyric() - Creating custumized Lyric to user="+user.toString());
+		//lyricentity.setUserid(user.getUserId());
+		lyricentity.setTextLyric(mylyric);
+		
+		addLyric(lyricentity, creatnewlyric);
+		logger.info("VirtualEJB.updateLyric() - Has been created a custumized Lyric to user="+user.toString()+" musicid = "+music.getMusicid());
+		if(!creatnewlyric){
+			this.musicFacade.edit(music);
+			logger.info("VirtualEJB.updateLyric() - Music & Lyric has been updated for user="+user.toString()+" musicid = "+music.getMusicid());
+		}
+		//this.musicFacade.edit(music);
+//		this.lyricfacade.edit(lyricentity);
 	}
 
 	public void remove(MusicEntity music) {

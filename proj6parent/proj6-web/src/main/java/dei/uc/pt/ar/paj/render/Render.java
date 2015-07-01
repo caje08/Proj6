@@ -24,7 +24,9 @@ public class Render implements Serializable {
 	private boolean newMusic;
 	private boolean uploadMusic;
 	private boolean uploadable;
-
+	private boolean editLyric;
+	private boolean readLyric;
+	
 	public void init(){
 		this.newMusic=false;
 		this.editMusic=false;
@@ -35,6 +37,8 @@ public class Render implements Serializable {
 		this.editUserPassword=false;
 		this.uploadMusic=false;
 		this.uploadable=false;
+		this.editLyric=false;
+		this.readLyric=false;
 	}
 
 	public boolean isActive() {
@@ -126,4 +130,20 @@ public class Render implements Serializable {
 		this.addMusicToPlayList = addMusicToPlayList;
 	}
 
+	public boolean isEditLyric() {
+		return editLyric;
+	}
+
+	public void setEditLyric(boolean editLyric) {
+		this.editLyric = editLyric;
+	}
+
+	public boolean isReadLyric() {
+		return readLyric;
+	}
+
+	public void setReadLyric(boolean readLyric) {
+		this.readLyric = readLyric;
+	}
+	
 }

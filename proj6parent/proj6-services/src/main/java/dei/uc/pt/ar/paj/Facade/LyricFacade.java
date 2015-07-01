@@ -1,13 +1,19 @@
 package dei.uc.pt.ar.paj.Facade;
 
 import java.util.Objects;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import dei.uc.pt.ar.paj.Entities.UserEntity;
 import dei.uc.pt.ar.paj.Entities.LyricEntity;
 import dei.uc.pt.ar.paj.Entities.MusicEntity;
+import dei.uc.pt.ar.paj.ejb.VirtualEJB;
 
 /**
  *
@@ -24,6 +30,8 @@ public class LyricFacade extends AbstractFacade<LyricEntity> {
 		return em;
 	}
 
+	static Logger logger = LoggerFactory.getLogger(LyricFacade.class);
+	
 	public LyricFacade() {
 		super(LyricEntity.class);
 	}
@@ -53,6 +61,23 @@ public class LyricFacade extends AbstractFacade<LyricEntity> {
 			return false;
 		}
 	}
+	public LyricEntity existUserLyricText(MusicEntity music, UserEntity utilizador) {
+		TypedQuery<LyricEntity> q;
+		LyricEntity saida;
+		q = em.createNamedQuery("Lyric.findLyricByMusic&User",
+				LyricEntity.class);
+		try {
+			logger.info("LyricFacade.existUserLyricText() - Search user textLyric for userid="+utilizador.getUserId()+", musicid="+music.getMusicid());
+			q.setParameter("musicid", music.getMusicid()).setParameter("userid", utilizador.getUserId());
+			saida=q.getSingleResult();
+			logger.info("LyricFacade.existUserLyricText() produced LyricEntity.textLyric="+saida.getTextLyric());
+		} catch (Exception e) {
+			System.out.println("LyricFacade.existUserLyricText() - User doesn't have costumized Lyric: "+e.getMessage());
+			logger.error("LyricFacade.existUserLyricText() - User doesn't have costumized Lyric: "+e.getMessage());
+			return null;
+		}
+		return saida;
+	}
 
 	public boolean existUserLyric(MusicEntity music, UserEntity utilizador) {
 		TypedQuery<Integer> q;
@@ -74,7 +99,7 @@ public class LyricFacade extends AbstractFacade<LyricEntity> {
 //				getEntityManager().merge(utilizador);
 //			}
 //		}
-		// vai à tabela Music e actualiza a lista de lyrics
+//	//	 vai à tabela Music e actualiza a lista de lyrics
 //		for (LyricEntity l : m.getLyrics()) {
 //			if (Objects.equals(l.getMusic().getMusicid(), m.getMusicid())) {
 //				l.setTextLyric(lyric.getTextLyric());
