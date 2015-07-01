@@ -34,7 +34,7 @@ public class MusicWS {
 	private MusicEJBLocal musicejb;
 	
 	@EJB
-	private UserEJB userejb;
+	private UserEJBLocal userejb;
 	
 	@Inject
 	private VirtualEJB virtualejb;
@@ -78,9 +78,7 @@ public class MusicWS {
 	@Produces("application/xml")
 	public Response getUserSongs(@PathParam("userid") long id){
 		
-		UserEntity user = userejb.findById(id);
-		
-		
+		UserEntity user = userejb.findById(id);		
 		
 		List<MusicREST> songs = ConverterEntityToWS.convertMusicEntityToMusicWS(musicejb.findOrdered(MusicEntity.Ordering.FIND_BY_OWNER_ORDER_BY_NOME_ASC, user)) ;
 		
@@ -90,13 +88,21 @@ public class MusicWS {
 	}
 	
 	@GET
-	@Path("/removesong/{userid: d\\+}/{songid: d\\+}")
+	@Path("/removesong/{userid: \\d+}/{songid: \\d+}")
 	@Produces("application/xml")
 	public Response removeSongFromUser(@PathParam("userid") long userid, @PathParam("songid") long songid ){
+		MusicEntity music = musicejb.getMusicByID(songid);
 		UserEntity user = userejb.findById(userid);
-		user.getUsermusicas().remove(musicejb.getMusicByID(songid));
 		
-		virtualejb.update(user);
+		if(music.getOwner().getUserId()==user.getUserId()){
+			music.setOwner(userejb.findById(1));
+			user.getUsermusicas().remove(music);
+		
+		}else{
+			return Response.notModified().build();
+		}
+				
+		
 		return Response.status(200).build();
 	}
 	

@@ -260,10 +260,19 @@ public class VirtualEJB implements Serializable {
 		// actualiza os dados na BD
 		this.musicFacade.edit(music);
 	}
+	
+	public void delete(long songid, Class<MusicEntity> class1) {
+		this.musicFacade.delete(songid, class1);
+		
+	}
 
 	public void remove(MusicEntity music) {
 		this.musicFacade.remove(music);
 	}
+	
+	
 	// Music
 	// Queries gen�ricas End
+
+	
 }

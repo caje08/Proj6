@@ -27,6 +27,10 @@ public abstract class AbstractFacade<T> {
 
 	protected abstract EntityManager getEntityManager();
 	
+	public void delete(Object id, Class<T> classe) {
+        T entityToBeRemoved = getEntityManager().getReference(classe, id);        
+        getEntityManager().remove(getEntityManager().merge(entityToBeRemoved));
+    }
 	
 	public void merge(T entity) {
 		getEntityManager().merge(entity);
@@ -41,7 +45,8 @@ public abstract class AbstractFacade<T> {
 	}
 
 	public void remove(T entity) {
-		getEntityManager().remove(getEntityManager().merge(entity));
+		T enttoberemoved = getEntityManager().merge(entity);
+		getEntityManager().remove(enttoberemoved);
 	}
 
 	public void refresh(T entity) {
