@@ -28,7 +28,8 @@ public class UserWSConsumer {
 			target = client
 					.target("http://localhost:9001/proj6-ws/rest/user-mgmt/usernumber");
 			Response response = target.request().get();
-			System.out.println("The App has " + response.readEntity(String.class)
+			NumberREST usernumber = response.readEntity(NumberREST.class);
+			System.out.println("The App has " + usernumber.getUsernumber()
 					+ " users.");
 		} catch (NullPointerException e) {
 			System.out.println("Could not connect to client!");
@@ -96,8 +97,10 @@ public class UserWSConsumer {
 				.target("http://localhost:9001/proj6-ws/rest/user-mgmt/loggedusersnumber");
 
 		Response response = target.request().get();
+		NumberREST usernumber = response.readEntity(NumberREST.class);
 		
-		System.out.println("The App has " + response.readEntity(String.class)
+		
+		System.out.println("The App has " + usernumber.getUsernumber()
 				+ " logged users.");
 		
 		

@@ -10,6 +10,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
 import pt.dei.uc.RESTentities.MusicREST;
 import pt.dei.uc.RESTentities.MusicsREST;
+import pt.dei.uc.RESTentities.NumberREST;
 
 public class SongWSConsumer {
 
@@ -26,8 +27,9 @@ public class SongWSConsumer {
 			target = client
 					.target("http://localhost:9001/proj6-ws/rest/song-mgmt/songnumber");
 			Response response = target.request().get();
+			NumberREST number = response.readEntity(NumberREST.class);
 			System.out.println("The App has "
-					+ response.readEntity(String.class) + " songs.");
+					+ number.getUsernumber() + " songs.");
 		} catch (ProcessingException e) {
 			System.out.println("Could not connect to WebService!");
 		}catch(NoResultException e){

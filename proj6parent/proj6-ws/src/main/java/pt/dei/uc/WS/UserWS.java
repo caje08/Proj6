@@ -1,5 +1,7 @@
 package pt.dei.uc.WS;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -11,6 +13,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import pt.dei.uc.RESTentities.*;
@@ -55,13 +58,15 @@ public class UserWS {
 	
 	@GET
     @Path("/usernumber")
-    @Produces("text/plain")
-	public int getUsersSize(){
+    @Produces("application/xml")
+	public Response getUsersSize(){
 		List<UserEntity> userlist = userejb.getUsers();		
         List<UserREST> userlistREST = ConverterEntityToWS.convertUserEntityToUserWS(userlist);
         UsersREST users = new UsersREST();
         users.setUsers(userlistREST);
-        return userlistREST.size();
+        NumberREST number = new NumberREST();
+        number.setUsernumber(userlistREST.size());
+        return Response.status(200).entity(number).build();
 		
 	}
 	
@@ -77,16 +82,19 @@ public class UserWS {
 	
 	@GET
 	@Path("/loggedusersnumber")
-	@Produces("text/plain")
-	public int getLoggedUserNumber(){
-		return UserEJB.getUserCount();
+	@Produces("application/xml")
+	public Response getLoggedUserNumber(){
+		NumberREST number = new NumberREST();
+		number.setUsernumber(UserEJB.getUserCount());
+		return Response.status(200).entity(number).build();
 	}
 	
 	@GET
 	@Path("/loggedusers")
 	@Produces("application/xml")
 	public Response getLoggedUsers(){
-		List<UserEntity> loggedusers = UserEJB.getLoggedUsers();
+		List<UserEntity> loggedusers = new ArrayList<UserEntity>();
+		loggedusers.addAll(UserEJB.getLoggedUsers().keySet());
 		List<UserREST> loggedusersREST = ConverterEntityToWS.convertUserEntityToUserWS(loggedusers);
 		UsersREST users = new UsersREST();
         users.setUsers(loggedusersREST);

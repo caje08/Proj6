@@ -45,12 +45,14 @@ public class MusicWS {
 	
 	@GET
 	@Path("/songnumber")
-	@Produces("text/plain")
-	public int getSongsNumber(){
+	@Produces("application/xml")
+	public Response getSongsNumber(){
 		List<MusicEntity> musics = musicejb.getMusicas();
 		List <MusicREST> musicsREST = ConverterEntityToWS.convertMusicEntityToMusicWS(musics);
 		
-		return musicsREST.size();
+		NumberREST number = new NumberREST();
+		number.setUsernumber(musicsREST.size());
+		return Response.status(200).entity(number).build();
 	}
 	
 	@GET

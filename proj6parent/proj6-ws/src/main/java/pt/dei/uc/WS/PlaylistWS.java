@@ -45,13 +45,15 @@ public class PlaylistWS {
 	
 	@GET
     @Path("/playlistsnumber")
-    @Produces("text/plain")
-	public int getPlaylistNumber(){
+    @Produces("application/xml")
+	public Response getPlaylistNumber(){
 		
 		List<PlaylistEntity> playlists = playlistejb.getPlaylists();
 		List<PlaylistREST> playlistsREST = ConverterEntityToWS.convertPlaylistEntityToPlaylistWS(playlists);
 		
-		return playlistsREST.size();
+		NumberREST number = new NumberREST();
+		number.setUsernumber(playlistsREST.size());
+		return Response.status(200).entity(number).build();
 	}
 	
 	@GET

@@ -17,24 +17,42 @@
 			<scope>provided</scope>
 		</dependency>
 		
-		<!-- Client Resteasy (confirmar versoes!) -->
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-client</artifactId>
-			<version>3.0.11.Final</version>
-		</dependency>
+		
+	
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.jboss.resteasy</groupId> -->
+<!-- 			<artifactId>providers-pom</artifactId> -->
+<!-- 			<version>3.0.11.Final</version> -->
+<!-- 			<type>pom</type> -->
+<!-- 		</dependency> -->
 		<!-- Parser XML -->
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxb-provider</artifactId>
 			<version>3.0.11.Final</version>
 		</dependency>
-		<!-- Parser json -->
+		
+<!-- 		Client Resteasy (confirmar versoes!)  -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-client</artifactId>
+			<version>3.0.11.Final</version>
+		</dependency>
+		
+<!-- 		Parser json -->
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jackson-provider</artifactId>
 			<version>3.0.11.Final</version>
 		</dependency>
+
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		
+		
 	</dependencies>
 
 	<build>
@@ -52,6 +70,35 @@
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
 				<version>1.1.0.Alpha1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.5.5</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- will main class to MANIFEST.MF -->
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>							
+							<mainClass>pt.dei.uc.mainApp.StandaloneApp</mainClass>
+							<useUniqueVersions>false</useUniqueVersions>
+						</manifest>
+					</archive>
+					<!-- will assembly the exploded dependencies within our uber jar -->
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<!-- will replace jar without dependencies with assembly jar -->
+					<appendAssemblyId>false</appendAssemblyId>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

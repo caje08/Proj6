@@ -26,8 +26,9 @@ public class PlaylistWSConsumer {
 			target = client
 					.target("http://localhost:9001/proj6-ws/rest/playlist-mgmt/playlistsnumber");
 			Response response = target.request().get();
+			NumberREST number = response.readEntity(NumberREST.class);
 			System.out.println("The App has "
-					+ response.readEntity(String.class) + " playlists.");
+					+ number.getUsernumber() + " playlists.");
 		} catch (ProcessingException e) {
 			System.out.println("Could not connect retrieve information!");
 		}catch(NoResultException e){
