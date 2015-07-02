@@ -2,6 +2,7 @@ package pt.dei.uc.wscomsumers;
 
 import pt.dei.uc.RESTentities.*;
 
+import javax.persistence.NoResultException;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
@@ -28,7 +29,9 @@ public class PlaylistWSConsumer {
 			System.out.println("The App has "
 					+ response.readEntity(String.class) + " playlists.");
 		} catch (ProcessingException e) {
-			System.out.println("Could not connect to WebService!");
+			System.out.println("Could not connect retrieve information!");
+		}catch(NoResultException e){
+			System.out.println("No result found!");
 		}
 	}
 
@@ -48,8 +51,10 @@ public class PlaylistWSConsumer {
 			}
 
 		} catch (ProcessingException e) {
-			System.out.println("Could not connect to WebService!");
+			System.out.println("Could not connect retrieve information!");
 			
+		}catch(NoResultException e){
+			System.out.println("No result found!");
 		}
 
 	}
@@ -74,8 +79,10 @@ public class PlaylistWSConsumer {
 			}
 		} catch (ProcessingException e) {
 
-			System.out.println("Could not connect to WebService!");
+			System.out.println("Could not connect retrieve information!");
 			
+		}catch(NoResultException e){
+			System.out.println("No result found!");
 		}
 
 	}
@@ -103,9 +110,11 @@ public class PlaylistWSConsumer {
 
 		} catch (ProcessingException e) {
 
-			System.out.println("Could not connect to WebService!");
+			System.out.println("Could not connect retrieve information!");
 			
 
+		} catch(NoResultException e){
+			System.out.println("No result found!");
 		}
 
 	}
@@ -137,9 +146,11 @@ public class PlaylistWSConsumer {
 
 		} catch (ProcessingException e) {
 
-			System.out.println("Could not connect to WebService!");
+			System.out.println("Could not connect retrieve information!");
 			
 
+		}catch(NoResultException e){
+			System.out.println("No result found!");
 		}
 
 	}
@@ -170,9 +181,11 @@ public class PlaylistWSConsumer {
 
 		} catch (ProcessingException e) {
 
-			System.out.println("Could not connect to WebService!");
+			System.out.println("Could not connect retrieve information!");
 			
 
+		}catch(NoResultException e){
+			System.out.println("No result found!");
 		}
 
 	}

@@ -68,7 +68,8 @@ public class MusicWS {
 	@Path("/infosong/{songid: \\d+}")
 	@Produces("application/xml")
 	public Response getSongInfo(@PathParam("songid") int id){
-		MusicEntity song = musicejb.getMusicByID(id);		
+		MusicEntity music = musicejb.getMusicByID(id);
+		MusicREST song = ConverterEntityToWS.convertMusicEntityToMusicWS(music);
 		
 		return Response.status(200).entity(song).build();
 	}
@@ -106,8 +107,4 @@ public class MusicWS {
 		return Response.status(200).build();
 	}
 	
-	
-	
-	
-
 }

@@ -2,6 +2,8 @@ package pt.dei.uc.wscomsumers;
 
 import pt.dei.uc.RESTentities.*;
 
+import javax.persistence.NoResultException;
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,6 +33,10 @@ public class UserWSConsumer {
 		} catch (NullPointerException e) {
 			System.out.println("Could not connect to client!");
 			e.printStackTrace();
+		}catch (ProcessingException e) {
+			System.out.println("Could not connect retrieve information!");
+		}catch(NoResultException e){
+			System.out.println("No result found!");
 		}
 
 		
@@ -66,11 +72,17 @@ public class UserWSConsumer {
 		
 		target = target.path(""+id);
 		
-		Response response = target.request().get();
-		
-		UserREST user = response.readEntity(UserREST.class);
-		
-		user.getInfo();	
+		try {
+			Response response = target.request().get();
+			
+			UserREST user = response.readEntity(UserREST.class);
+			
+			user.getInfo();
+		} catch (ProcessingException e) {
+			System.out.println("Could not connect retrieve information!");
+		}catch(NoResultException | NullPointerException e){
+			System.out.println("No result found!");
+		}
 		
 		
 		
@@ -119,13 +131,19 @@ public class UserWSConsumer {
 		
 		target = target.path(""+id);
 
-		Response response = target.request().get();
-		
-		UserREST user = response.readEntity(UserREST.class);
-		
-		System.out.println("The user with the following info was removed");
-		
-		user.getInfo();
+		try {
+			Response response = target.request().get();
+			
+			UserREST user = response.readEntity(UserREST.class);
+			
+			System.out.println("The user with the following info was removed");
+			
+			user.getInfo();
+		} catch (ProcessingException e) {
+			System.out.println("Could not connect retrieve information!");
+		}catch(NoResultException e){
+			System.out.println("No result found!");
+		}
 		
 		
 	}

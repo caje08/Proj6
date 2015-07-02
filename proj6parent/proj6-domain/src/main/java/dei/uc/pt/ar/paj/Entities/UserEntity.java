@@ -66,6 +66,7 @@ public class UserEntity implements Serializable {
 
 	public UserEntity() {
 		super();
+		this.role="appuser";
 	}
 
 	public UserEntity(String name, String password, String email, String dtnasc) {
@@ -74,7 +75,7 @@ public class UserEntity implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.datanascimento = dtnasc;
-		this.role="appuser";
+		
 	}
 
 	public Long getUserId() {

@@ -30,7 +30,7 @@ public class StandaloneApp {
 				break;
 
 			case 3:
-
+				songManagement();
 				break;
 			case 4:
 
@@ -40,9 +40,66 @@ public class StandaloneApp {
 		}
 
 	}
-	
-	public static void playlistManagement(){
-		
+
+	public static void songManagement() {
+		Scanner sc = new Scanner(System.in);
+		int exitcondition = 1;
+		while (exitcondition > 0) {
+			System.out.println();
+			System.out.println("Number of songs - 1");
+			System.out.println("Show all songs - 2 ");
+			System.out.println("Show song info - 3");
+			System.out.println("Show songs from user - 4");
+			System.out.println("Remove Song belonging to user - 5");
+			System.out.println("Exit - 6");
+
+			switch (sc.nextInt()) {
+			case 1:
+				SongWSConsumer.getNumberOfPlaylists();
+				break;
+			case 2:
+				SongWSConsumer.getAllSongs();
+				break;
+			case 3:
+				showSongsInfo();
+				break;
+			case 4:
+				showSongsFromUser();
+				break;
+			case 5:
+				removeSongFromUser();
+				break;
+			case 6:
+				exitcondition = -1;
+				break;
+			}
+		}
+	}
+
+	private static void removeSongFromUser() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Insert user ID: ");
+		int userid = sc.nextInt();
+		System.out.println("Insert song ID: ");
+		int songid = sc.nextInt();
+
+		SongWSConsumer.removeSongFromUser(userid, songid);
+	}
+
+	private static void showSongsFromUser() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Insert user ID: ");
+		SongWSConsumer.getSongsFromUser(sc.nextInt());
+	}
+
+	private static void showSongsInfo() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Insert song ID: ");
+		SongWSConsumer.getSongInfo(sc.nextInt());
+	}
+
+	public static void playlistManagement() {
+
 		Scanner sc = new Scanner(System.in);
 		int exitcondition = 1;
 		while (exitcondition > 0) {
@@ -56,8 +113,8 @@ public class StandaloneApp {
 			System.out.println("Remove song from playlist - 6");
 			System.out.println("Exit - 7");
 			int choice = sc.nextInt();
-			
-			switch(choice){
+
+			switch (choice) {
 			case 1:
 				PlaylistWSConsumer.getNumberOfPlaylists();
 				break;
@@ -74,52 +131,50 @@ public class StandaloneApp {
 				addSongToPlaylist();
 				break;
 			case 6:
-				
-				
-				
+
 			case 7:
-				exitcondition=-1;
+				exitcondition = -1;
 				break;
 			}
 		}
-		
+
 	}
-	
-	public static void addSongToPlaylist(){
+
+	public static void addSongToPlaylist() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Insert the ID of the playlist you want to add"
 				+ " the song to: ");
 		int playid = sc.nextInt();
-		
+
 		System.out.println("Insert the ID of the song you want to add: ");
 		int songid = sc.nextInt();
-		
+
 		PlaylistWSConsumer.addSongToPlaylist(playid, songid);
 	}
-	
-	public static void removeSongFromPlaylist(){
+
+	public static void removeSongFromPlaylist() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Insert the ID of the playlist you want to remove"
 				+ " the song from: ");
 		int playid = sc.nextInt();
-		
+
 		System.out.println("Insert the ID of the song you want to remove: ");
 		int songid = sc.nextInt();
-		
+
 		PlaylistWSConsumer.removeSongFromPlaylist(playid, songid);
 	}
-	
-	public static void playlistsFromUser(){
+
+	public static void playlistsFromUser() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Insert the user ID: ");
 		PlaylistWSConsumer.getPlaylistByUser(sc.nextInt());
-		
+
 	}
-	
-	public static void songsFromPlaylist(){
+
+	public static void songsFromPlaylist() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Insert the ID of the playlist:");
-		PlaylistWSConsumer.getSongsFromPlaylist(sc.nextInt());		
+		PlaylistWSConsumer.getSongsFromPlaylist(sc.nextInt());
 	}
 
 	public static void userManagement() {
@@ -168,9 +223,6 @@ public class StandaloneApp {
 			case 9:
 				exitcondition = -1;
 			}
-			
-				
-				
 
 		}
 	}
@@ -189,10 +241,10 @@ public class StandaloneApp {
 		UserREST user = new UserREST();
 		int exitcondition = 1;
 		Scanner sc = new Scanner(System.in);
-		
+
 		System.out.println("Insert user's name");
 		user.setName(sc.next());
-		
+
 		while (exitcondition > 0) {
 			System.out.println("Insert user's password");
 			String password = sc.next();
@@ -200,31 +252,30 @@ public class StandaloneApp {
 			String confpassword = sc.next();
 			if (password.equals(confpassword)) {
 				user.setPassword(password);
-				exitcondition =-1;
+				exitcondition = -1;
 			}
 		}
-		
-		System.out.println("Insert user's birthdate");		
+
+		System.out.println("Insert user's birthdate");
 		user.setDatanascimento(sc.next());
-		
+
 		System.out.println("Insert user's email");
 		user.setEmail(sc.next());
-		
+
 		UserWSConsumer.addUser(user);
 	}
-	
-	public static void removeUser(){
+
+	public static void removeUser() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Insert Id of user you wish to remove");
-		
+
 		int id = sc.nextInt();
-		
+
 		UserWSConsumer.removeUser(id);
-		
-		
+
 	}
-	
-	public static void editUserPassword(){
+
+	public static void editUserPassword() {
 		Scanner sc = new Scanner(System.in);
 		Scanner sc1 = new Scanner(System.in);
 		System.out.println("Insert the Id of the user who's password you"
@@ -232,8 +283,8 @@ public class StandaloneApp {
 		int id = sc.nextInt();
 		System.out.println("Insert the new password");
 		String password = sc1.next();
-		
+
 		UserWSConsumer.editUserPassword(id, password);
 	}
-	
+
 }

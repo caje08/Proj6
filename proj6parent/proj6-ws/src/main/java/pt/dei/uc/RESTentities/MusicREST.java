@@ -2,14 +2,29 @@ package pt.dei.uc.RESTentities;
 
 import java.util.List;
 
+import dei.uc.pt.ar.paj.Entities.MusicEntity;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name="music")
 public class MusicREST {
 	
+	@XmlElement(name="musicid")
 	private long musicid;
+	@XmlElement(name="name")
 	private String nomemusica;
+	@XmlElement(name="artist")
 	private String interprete;
+	@XmlElement(name="album")
 	private String album;
+	@XmlElement(name="year")
 	private String anolancamento;
 	private double length;
+	@XmlElement(name="user")
 	private UserREST utilizador;
 	private String path;
 	private List<PlaylistREST> playlists;
@@ -17,7 +32,7 @@ public class MusicREST {
 	private String tipomusica;
 
 	public MusicREST() {
-		
+			
 	}
 
 	public long getMusicid() {
