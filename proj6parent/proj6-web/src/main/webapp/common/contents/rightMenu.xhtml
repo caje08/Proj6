@@ -106,6 +106,7 @@
 			<!-- Add Music -->
 			<h:form rendered="#{render.newMusic}">
 				<h2>Add Music:</h2>
+
 				<h:outputLabel value="Track Name:" />
 				<h:inputText value="#{newMusic.newName}" />
 				<h:outputLabel value="Artist:" />
@@ -117,6 +118,9 @@
 					value="Add Music" />
 				<h:commandButton action="#{activeSession.newMusicCancel()}"
 					value="Cancel" />
+				<br/>					
+				<h:outputLabel style="color:red" value="#{activeSession.mensagem}" />
+				<br />
 			</h:form>
 
 		</div>

@@ -15,6 +15,7 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -35,10 +36,10 @@ import javax.validation.constraints.Size;
 				
 	    @NotNull
 	    @Basic(optional = false)
-	    @Size(min = 1)
+	    @Size(min = 1, max=10000)
 	    private String textLyric;	    
 	    
-	    @EmbeddedId
+	    @EmbeddedId	    
 	    LyricEntityId id;
 	    
 	    public LyricEntity() {

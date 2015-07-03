@@ -46,8 +46,9 @@ public class NewMusic implements Serializable {
 	}
 
 	public boolean verify() throws IOException{
-		if(this.newAlbum.equals(""))
+		if(this.newAlbum.equals("")){
 			return false;
+		}
 
 		if(this.newArtist.equals(""))
 			return false;

@@ -154,13 +154,13 @@ public class MusicEntity implements Serializable {
 	@Column(name = "tipomusica", nullable = false)
 	private String tipomusica;
 	
-	@Column(name = "originalLyric")
+	@Column(name = "originalLyric", length=10000)
 	private String originalLyric;
 	
 	@Column(name = "lyricExist")
 	private boolean lyricExist;
 	
-	@Column(name = "mylyricversion")
+	@Column(name = "mylyricversion", length=10000)
 	private String mylyricversion;	
 
 	@Column(name = "changeoriginal")

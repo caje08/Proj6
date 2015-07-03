@@ -32,6 +32,11 @@ public abstract class AbstractFacade<T> {
         getEntityManager().remove(getEntityManager().merge(entityToBeRemoved));
     }
 	
+	public void deleteByID(Object id, Class<T> classe) {
+        T entityToBeRemoved = getEntityManager().getReference(classe, id);        
+        getEntityManager().remove(entityToBeRemoved);
+    }
+	
 	public void merge(T entity) {
 		getEntityManager().merge(entity);
 	}

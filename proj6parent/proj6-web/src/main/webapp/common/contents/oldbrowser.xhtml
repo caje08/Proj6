@@ -152,7 +152,17 @@
 					<td><h:inputTextarea id="myLy" styleClass="inputbox"
 							value="#{activeSession.showmylyric}" /></td>
 				</tr>
-				
+				<tr>
+					<td><label>Finding Better Lyrics :</label></td>
+					<td><h:commandButton action="#{activeSession.showrestwikia}"
+							value="Rest wikia" /></td>
+					<td><h:commandButton
+							action="#{activeSession.showrestchartlyrics}"
+							value="Rest Chartlyrics" /></td>
+					<td><h:commandButton
+							action="#{activeSession.showsoapchartlyrics}"
+							value="Soap Chartlyrics" /></td>
+				</tr>
 			</table>
 			<table>
 				<tr></tr>

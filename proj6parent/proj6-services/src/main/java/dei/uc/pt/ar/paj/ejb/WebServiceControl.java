@@ -145,27 +145,32 @@ import dei.uc.pt.ar.paj.Entities.*;
 	        while(i<100 && !existSong){
 	        
 	          if(i%3==0){	
+	        	  System.out.println("Em WebServiceControl.getLyricsMusicExists() - Tentativa nº"+(i+1)+" procura REST no lyrics.wikia.com");
 	             try {	           
 	               text = lyricontrol.getLyricsToMusic(m, "getLikiwiki");
 	               Logger.getLogger(WebServiceControl.class.getName()).log(Level.INFO, "Lyric found by REST from lyrics.wikia.com ");
+	               text = text+"--> Lyric found by REST from lyrics.wikia.com ";
 	             } catch (Exception e1) {
 	        	   System.out.println("getLyricsMusicExists() exception error into webServiceControl class with text 'getLikiwiki'\n");
 	               Logger.getLogger(WebServiceControl.class.getName()).log(Level.SEVERE, null, e1);
 	             }
 	          }else if(i%3==1){
+	        	  System.out.println("Em WebServiceControl.getLyricsMusicExists() - Tentativa nº"+(i+1)+" procura REST no chartlyrics.com");
 	        	  try{
 	        		  text = lyricontrol.getLyricsToMusic(m, "getLyricrest");
 	        		  Logger.getLogger(WebServiceControl.class.getName()).log(Level.INFO, "Lyric found by REST from chartlyrics.com ");
+	        		  text = text+ "--> Lyric found by REST from chartlyrics.com ";
 	        	  }catch (Exception e2) {
 	        	  
 	        		  System.out.println("getLyricsMusicExists() exception error into webServiceControl class with text 'getLyricrest'\n");
 		               Logger.getLogger(WebServiceControl.class.getName()).log(Level.SEVERE, null, e2);
 	        	  }
 	          }else{
-	        	  
+	        	  System.out.println("Em WebServiceControl.getLyricsMusicExists() - Tentativa nº"+(i+1)+" procura SOAP no chartlyrics.com");
 	        	  try{
 	        		  text = lyricontrol.getLyricsToMusic(m, "getLyricsoap");
 	        		  Logger.getLogger(WebServiceControl.class.getName()).log(Level.INFO, "Lyric found by SOAP from chartlyrics.com ");
+	        		  text = text + "--> Lyric found by SOAP from chartlyrics.com ";
 	        	  }catch(Exception e3) {
 		        	   System.out.println("getLyricsMusicExists() exception error into webServiceControl class with text 'getLikiwiki'\n");
 		               Logger.getLogger(WebServiceControl.class.getName()).log(Level.SEVERE, null, e3);
@@ -173,7 +178,59 @@ import dei.uc.pt.ar.paj.Entities.*;
 	          }
 
 	        
-	           if(text!=null && text!="" && !text.equals("Not Found"))
+	           if(text!=null && text!="" && !text.equals("Not found") && !text.equals("Not Found"))
+	        	 existSong=true;
+	           i++;
+	        }
+	        return text;
+	    }
+	    
+	    public String getAgainLyricsMusic(MusicEntity m, int op) throws Throwable {
+	        boolean existSong = false;
+	        String text="Lyric Not Found";
+	        int i=0;
+	        
+	               
+	        while(i<100 && !existSong){
+	        
+	          if(op==0){	
+	        	  System.out.println("Em WebServiceControl.getLyricsMusicExists() - Tentativa nº"+(i+1)+" procura REST no lyrics.wikia.com");
+	             try {	           
+	               text = lyricontrol.getLyricsToMusic(m, "getLikiwiki");
+	               Logger.getLogger(WebServiceControl.class.getName()).log(Level.INFO, "Lyric found by REST from lyrics.wikia.com ");
+	               text = text+"--> Lyric found by REST from lyrics.wikia.com ";
+	             } catch (Exception e1) {
+	        	   System.out.println("getLyricsMusicExists() exception error into webServiceControl class with text 'getLikiwiki'\n");
+	               Logger.getLogger(WebServiceControl.class.getName()).log(Level.SEVERE, null, e1);
+	               text="Lyric Not Found";
+	             }
+	          }else if(op==1){
+	        	  System.out.println("Em WebServiceControl.getLyricsMusicExists() - Tentativa nº"+(i+1)+" procura REST no chartlyrics.com");
+	        	  try{
+	        		  text = lyricontrol.getLyricsToMusic(m, "getLyricrest");
+	        		  Logger.getLogger(WebServiceControl.class.getName()).log(Level.INFO, "Lyric found by REST from chartlyrics.com ");
+	        		  text = text+ "--> Lyric found by REST from chartlyrics.com ";
+	        	  }catch (Exception e2) {
+	        	  
+	        		  System.out.println("getLyricsMusicExists() exception error into webServiceControl class with text 'getLyricrest'\n");
+		               Logger.getLogger(WebServiceControl.class.getName()).log(Level.SEVERE, null, e2);
+		               text="Lyric Not Found";
+	        	  }
+	          }else{
+	        	  System.out.println("Em WebServiceControl.getLyricsMusicExists() - Tentativa nº"+(i+1)+" procura SOAP no chartlyrics.com");
+	        	  try{
+	        		  text = lyricontrol.getLyricsToMusic(m, "getLyricsoap");
+	        		  Logger.getLogger(WebServiceControl.class.getName()).log(Level.INFO, "Lyric found by SOAP from chartlyrics.com ");
+	        		  text = text + "--> Lyric found by SOAP from chartlyrics.com ";
+	        	  }catch(Exception e3) {
+		        	   System.out.println("getLyricsMusicExists() exception error into webServiceControl class with text 'getLikiwiki'\n");
+		               Logger.getLogger(WebServiceControl.class.getName()).log(Level.SEVERE, null, e3);
+		               text="Lyric Not Found";
+		             }	          
+	          }
+
+	        
+	           if(text!=null && text!="" && !text.equals("Not found") && !text.equals("Not Found"))
 	        	 existSong=true;
 	           i++;
 	        }

@@ -2,17 +2,21 @@ package dei.uc.pt.ar.paj.Entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 
 @Embeddable
+
 public class LyricEntityId implements Serializable {
 
 //	private UserEntity utilizador;
 //	private String useremail;
 //	private MusicEntity music;
+	
 	private Long userID;
 	private Long musicID;
 	

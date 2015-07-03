@@ -75,7 +75,7 @@ public class UserEntity implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.datanascimento = dtnasc;
-		
+		this.role="appuser";
 	}
 
 	public Long getUserId() {
