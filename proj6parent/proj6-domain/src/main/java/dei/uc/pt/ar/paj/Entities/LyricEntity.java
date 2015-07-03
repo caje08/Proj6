@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 	 */
 	@Entity
 	@NamedQueries({
-//	    @NamedQuery(name = "Lyric.findLyricByMusic&User", query = "SELECT l FROM LyricEntity l WHERE l.id = :id"),
+	    @NamedQuery(name = "Lyric.findLyricByUser", query = "SELECT l FROM LyricEntity l WHERE l.id.userID = :userid"),
 	    @NamedQuery(name = "Lyric.findLyricByMusic&User", query = "SELECT l FROM LyricEntity l WHERE l.id.musicID = :musicid AND l.id.userID = :userid"),
 	    @NamedQuery(name = "Lyric.existLyric", query = "SELECT COUNT(l) FROM LyricEntity l WHERE l.id = :id")
 	})

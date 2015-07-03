@@ -503,20 +503,22 @@ public class ActiveSession implements Serializable {
 		UserEntity admin = userFacade.findByEmailPass("admin@admin",
 				"jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=");
 
+		//Remover Lyrics
+		int nreg=ejb.deleteLyricsfromUser(activeUser);
+		logger.info("Em ActiveSession.deleteUser() were deleted nreg="+ nreg+", from LyricEntity related to userID="+activeUser.getUserId());
 				
 		// Desassocia as Músicas
-		for (MusicEntity m : musics) {
-			//Remover Lyrics
-			lyrictxt=ejb.getandRemoveLyricfromFacade(m,activeUser);
-			logger.info("Em ActiveSession.deleteUser() Lyrictxt=" + lyrictxt);
+		for (MusicEntity m : musics) {		
 			m.setUtilizador(admin);
 			this.ejb.update(m);
 		}
 		
 				
-		// Remove o User sem PlayLists e sem Músicas
-		this.ejb.remove(this.activeUser);
+		// Faz logout e Remove o User sem PlayLists e sem Músicas e sem Lyrics
+		UserEntity tmpuser = this.activeUser;
 		logout();
+		this.ejb.remove(tmpuser);
+		//logout();
 	}
 
 	// User Edits End
@@ -540,11 +542,14 @@ public class ActiveSession implements Serializable {
 		this.render.setEditPlayList(false);
 		if (this.editMusic.editThisLyric(music, this.activeUser)) {
 			this.activeMusic = music;
-			if (i == 1)
+			if (i == 1 || i== 0) 
 				this.render.setEditLyric(true);
 			else
 				this.render.setReadLyric(true);
-		} else {
+		} else if(i==0 || i==1){
+			this.activeMusic = music;
+			this.render.setEditLyric(true);
+		} else{
 			this.render.setEditLyric(false);
 			this.render.setReadLyric(false);
 		}
@@ -783,13 +788,12 @@ public class ActiveSession implements Serializable {
 		this.render.setEditLyric(false);
 		this.render.setAddMusicToPlayList(false);
 		this.userPlaylists = this.ejb.getPlayLists(this.activeUser, 0);
+		this.search="";
 	}
 
 	// Remove music from Playlist
 	public void removeMusicFromPlayList(MusicEntity music) {
 		String lyrictxt = "";
-	//	lyrictxt=ejb.getandRemoveLyricfromFacade(activeMusic, activeUser);
-	//	logger.info("Em ActiveSession.removeMusicFromPlayList() Lyrictxt=" + lyrictxt);
 		
 		this.editPlayList.removeMusicFromPlayList(music);
 		this.ejb.update(this.activePlayList);

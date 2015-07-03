@@ -139,7 +139,8 @@ import dei.uc.pt.ar.paj.Entities.*;
 	    
 	    public String getLyricsMusicExists(MusicEntity m) throws Throwable {
 	        boolean existSong = false;
-	        String text="";
+	        String text="", mensag="";
+	        
 	        int i=0;
 	        
 	        while(i<100 && !existSong){
@@ -149,7 +150,8 @@ import dei.uc.pt.ar.paj.Entities.*;
 	             try {	           
 	               text = lyricontrol.getLyricsToMusic(m, "getLikiwiki");
 	               Logger.getLogger(WebServiceControl.class.getName()).log(Level.INFO, "Lyric found by REST from lyrics.wikia.com ");
-	               text = text+"--> Lyric found by REST from lyrics.wikia.com ";
+	               
+	               mensag="--> Lyric found by REST from lyrics.wikia.com ";
 	             } catch (Exception e1) {
 	        	   System.out.println("getLyricsMusicExists() exception error into webServiceControl class with text 'getLikiwiki'\n");
 	               Logger.getLogger(WebServiceControl.class.getName()).log(Level.SEVERE, null, e1);
@@ -159,7 +161,7 @@ import dei.uc.pt.ar.paj.Entities.*;
 	        	  try{
 	        		  text = lyricontrol.getLyricsToMusic(m, "getLyricrest");
 	        		  Logger.getLogger(WebServiceControl.class.getName()).log(Level.INFO, "Lyric found by REST from chartlyrics.com ");
-	        		  text = text+ "--> Lyric found by REST from chartlyrics.com ";
+	        		  mensag= "--> Lyric found by REST from chartlyrics.com ";
 	        	  }catch (Exception e2) {
 	        	  
 	        		  System.out.println("getLyricsMusicExists() exception error into webServiceControl class with text 'getLyricrest'\n");
@@ -170,7 +172,7 @@ import dei.uc.pt.ar.paj.Entities.*;
 	        	  try{
 	        		  text = lyricontrol.getLyricsToMusic(m, "getLyricsoap");
 	        		  Logger.getLogger(WebServiceControl.class.getName()).log(Level.INFO, "Lyric found by SOAP from chartlyrics.com ");
-	        		  text = text + "--> Lyric found by SOAP from chartlyrics.com ";
+	        		  mensag= "--> Lyric found by SOAP from chartlyrics.com ";
 	        	  }catch(Exception e3) {
 		        	   System.out.println("getLyricsMusicExists() exception error into webServiceControl class with text 'getLikiwiki'\n");
 		               Logger.getLogger(WebServiceControl.class.getName()).log(Level.SEVERE, null, e3);
@@ -178,8 +180,12 @@ import dei.uc.pt.ar.paj.Entities.*;
 	          }
 
 	        
-	           if(text!=null && text!="" && !text.equals("Not found") && !text.equals("Not Found"))
-	        	 existSong=true;
+	           if(text!=null && text!="" && !text.equals("Not found") && !text.equals("Not Found")){
+	        	  text=text+mensag;
+	        	   existSong=true;	        	 
+	           }else if((i++)==100){
+	        	   text=text+mensag;
+	           }
 	           i++;
 	        }
 	        return text;
