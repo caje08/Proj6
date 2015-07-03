@@ -1,5 +1,7 @@
 package dei.uc.pt.ar.paj.Facade;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
@@ -87,6 +89,16 @@ public class LyricFacade extends AbstractFacade<LyricEntity> {
 		return i == 1; //only returns true if i==1
 	}
 
+	public List<LyricEntity> userLyrics(UserEntity utilizador){
+		List<LyricEntity> listlyrics = new ArrayList();
+		TypedQuery<LyricEntity> q;
+		q = em.createNamedQuery("Lyric.findLyricByUser", LyricEntity.class);
+		q.setParameter("userid", utilizador.getUserId());
+		listlyrics = q.getResultList();		
+		
+		return listlyrics;
+	}
+	
 	public void editLyric(LyricEntity lyric) {
 //		getEntityManager().merge(lyric);
 //		UserEntity utilizador = lyric.getUtilizador();

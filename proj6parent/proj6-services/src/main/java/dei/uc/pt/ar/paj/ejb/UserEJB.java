@@ -58,12 +58,9 @@ public class UserEJB implements UserEJBLocal {
 
 	@Override
 	public List<UserEntity> getUsers() {
-		// List<String> usernames = new LinkedList<>();
-		logger.trace("Trace Antes getUsers()");
-		logger.debug("Sample Antes debug message");
+		
 		logger.info("Sample Antes info message");
-		logger.warn("Sample Antes warn message");
-		logger.error("Sample Antes error message");
+		
 		System.out.println("Antes de criar a query");
 
 		Query q = em.createQuery("from UserEntity u");
@@ -72,15 +69,9 @@ public class UserEJB implements UserEJBLocal {
 		System.out.println(users);
 
 		System.out.println("Depois de apresentar os resultados");
-		logger.trace("Trace Depois getUsers()");
-		logger.debug("Sample Depois debug message");
+		
 		logger.info("Sample Depois info message");
-		logger.warn("Sample Depois warn message");
-		logger.error("Sample Depois error message");
-
-		// for (User u : users) {
-		// usernames.add(u.toString());
-		// }
+		
 
 		return users;
 	}

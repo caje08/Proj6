@@ -32,8 +32,8 @@ public class RegistryMB {
 	@Inject
 	private LoginMB loginMB;
 	// New User data
-	private String name = "e";
-	private String email = "e";
+	private String name;
+	private String email;
 	private String password;
 	private String confirmPassword;
 	private String pwEncrypted;

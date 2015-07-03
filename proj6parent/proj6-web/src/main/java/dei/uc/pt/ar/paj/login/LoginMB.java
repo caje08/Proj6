@@ -233,12 +233,12 @@ public class LoginMB implements Serializable{
 		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
 		
 		try{
-			logger.info("Email = "+email+", passwd="+password+" combination");
+			logger.info("Email = "+email+", has requested to be logged");
 			request.login(email, password);
 			searchUser();
 		}catch (ServletException e){
 			UtilMessage.addErrorMessage("Login Failed.");
-			logger.error("Wrong Email = "+email+", passwd="+password+" combination");
+			logger.error("Wrong Email = "+email+" and passwd combination");
 			this.errorMessage = "Email/Password combination not found! Please try again";
 			return "/login";
 		}

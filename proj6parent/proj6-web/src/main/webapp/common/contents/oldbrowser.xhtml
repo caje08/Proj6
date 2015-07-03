@@ -97,8 +97,6 @@
 					</f:facet>
 					<h:commandButton rendered="#{music.lyricExist}"
 						action="#{activeSession.editThisLyric(music,1)}" value="Read/Edit" />
-					<h:commandButton rendered="#{!music.lyricExist}"
-						action="#{activeSession.editThisLyric(music,0)}" value="Edit" />
 				</h:column>
 
 			</h:dataTable>
@@ -154,7 +152,17 @@
 					<td><h:inputTextarea id="myLy" styleClass="inputbox"
 							value="#{activeSession.showmylyric}" /></td>
 				</tr>
-				
+				<tr>
+					<td><label>Finding Better Lyrics :</label></td>
+					<td><h:commandButton action="#{activeSession.showrestwikia}"
+							value="Rest wikia" /></td>
+					<td><h:commandButton
+							action="#{activeSession.showrestchartlyrics}"
+							value="Rest Chartlyrics" /></td>
+					<td><h:commandButton
+							action="#{activeSession.showsoapchartlyrics}"
+							value="Soap Chartlyrics" /></td>
+				</tr>
 			</table>
 			<table>
 				<tr></tr>
@@ -266,7 +274,7 @@
 						<h:outputText value="Lyric Exists" />
 					</f:facet>
 					<h:commandButton
-						title="Adicione a musica a uma playlist para ver/alterar a Lyric"
+						title="Se'true', adicione a musica a uma playlist para ver/alterar a Lyric"
 						disabled="true" value="#{music.lyricExist}" />
 				</h:column>
 

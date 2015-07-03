@@ -7,6 +7,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import dei.uc.pt.ar.paj.Entities.LyricEntity;
 import dei.uc.pt.ar.paj.Entities.LyricEntityId;
 import dei.uc.pt.ar.paj.Entities.MusicEntity;
@@ -23,6 +26,7 @@ public class EditMusic implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1528717472172712711L;
+	static Logger logger = LoggerFactory.getLogger(EditMusic.class);
 
 	private String newName;
 	private String newAlbum;
@@ -166,39 +170,47 @@ public class EditMusic implements Serializable {
 				this.musicMyLyricVersion = this.musicOriginalLyric;
 			this.music = music;
 			return true;
-		} else if (music.isLyricExist()) {
+		} else{
 			this.lyricowner = false;
 
 			try {
 				musicMyLyricVersion = lirycontrol.prepareEdit(music, user);
-				System.out.println("MusicMyLyricVersion = "
+				System.out.println("EditMusic.editThisLyric() got MusicMyLyricVersion = "
 						+ musicMyLyricVersion);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				// e.printStackTrace();
-				System.out.println("Error at EditMusic.editThisLyric() "
+				logger.error("Error at EditMusic.editThisLyric() running lirycontrol.prepareEdit(music, user)"
+						+ e.getMessage());
+				System.out.println("Error at EditMusic.editThisLyric() running lirycontrol.prepareEdit(music, user)"
 						+ e.getMessage());
 				musicMyLyricVersion = "";
+				this.newName = music.getNomemusica();
+				this.newArtist = music.getInterprete();
+				this.newAlbum = music.getAlbum();
+				this.music = music;
+				return false;
 			}
 
 			this.newName = music.getNomemusica();
 			this.newArtist = music.getInterprete();
 			this.newAlbum = music.getAlbum();
-			this.musicOriginalLyric = music.getOriginalLyric();
+			
+			if (music.isLyricExist()) {
+			  this.musicOriginalLyric = music.getOriginalLyric();
+			
+			}
 			// this.musicMyLyricVersion=lyricentity.getTextLyric();
 			if ((this.musicMyLyricVersion == null || this.musicMyLyricVersion == "")
 					&& this.musicOriginalLyric.length() > 0) {
 				this.musicMyLyricVersion = this.musicOriginalLyric;
-				System.out.println("musicOriginalLyric="
+				System.out.println("EditMusic.editThisLyric() --> musicOriginalLyric="
 						+ this.musicOriginalLyric);
-				System.out.println("musicMyLyricVersion="
+				System.out.println("EditMusic.editThisLyric() --> musicMyLyricVersion="
 						+ this.musicMyLyricVersion);
+				
 			}
 			this.music = music;
 			return true;
 		}
-
-		return false;
 	}
 
 	public MusicEntity saveChanges() {

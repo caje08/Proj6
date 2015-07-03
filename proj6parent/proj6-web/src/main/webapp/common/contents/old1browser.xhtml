@@ -97,8 +97,6 @@
 					</f:facet>
 					<h:commandButton rendered="#{music.lyricExist}"
 						action="#{activeSession.editThisLyric(music,1)}" value="Read/Edit" />
-					<h:commandButton rendered="#{!music.lyricExist}"
-						action="#{activeSession.editThisLyric(music,0)}" value="Edit" />
 				</h:column>
 
 			</h:dataTable>
@@ -266,7 +264,7 @@
 						<h:outputText value="Lyric Exists" />
 					</f:facet>
 					<h:commandButton
-						title="Adicione a musica a uma playlist para ver/alterar a Lyric"
+						title="Se'true', adicione a musica a uma playlist para ver/alterar a Lyric"
 						disabled="true" value="#{music.lyricExist}" />
 				</h:column>
 

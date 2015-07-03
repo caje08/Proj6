@@ -282,6 +282,46 @@ public class VirtualEJB implements Serializable {
 		this.musicFacade.edit(music);		
 	}
 	
+	public int deleteLyricsfromUser( UserEntity user){
+		logger.info("Starting 'deleteLyricsfromUser()' --> userID="+user.getUserId()+" ...");
+		List<LyricEntity> listlyrics = new ArrayList();
+		
+		listlyrics=lyricFacade.userLyrics(user);
+		
+		for (LyricEntity l : listlyrics) {			
+			try{
+			     lyricFacade.delete(l.getId(),LyricEntity.class);
+			     logger.info("VirtualEJB.deleteLyricsfromUser(): deleted lyric for User = "+user.getName()+", UserID= "+user.getUserId()+", MusicID="+l.getMusicid());
+			  }catch (Exception e){
+				  logger.info("VirtualEJB.getandRemoveLyricfromFacade() error trying to delete lyric for User = "+user.getName()+" and UserID= "+user.getUserId()+", MusicID="+l.getMusicid()+", error="+e.getMessage()); 
+			  }
+		}		
+		
+		return listlyrics.size();
+	}
+	
+	public String getandRemoveLyricfromFacade(MusicEntity music, UserEntity user){
+		String lversion="";
+		logger.info("In VirtualEJB.getandRemoveLyricfromFacade() for checking an existent Lyric to delete");
+		lyricentity=lyricFacade.existUserLyricText(music, user);
+		
+		if(lyricentity!=null){
+		  logger.info("Em VirtualEJB.getandRemoveLyricfromFacade() lyricentity="+lyricentity.toString());
+		  try{
+		     lyricFacade.delete(lyricentity.getId(),LyricEntity.class);
+		     logger.info("VirtualEJB.getandRemoveLyricfromFacade() deleted lyric for User = "+user.getName()+" and Music= "+music.getNomemusica());
+		  }catch (Exception e){
+			  logger.info("VirtualEJB.getandRemoveLyricfromFacade() error trying to delete lyric for User = "+user.getName()+" and Music= "+music.getNomemusica()+", error="+e.getMessage()); 
+		  }		  
+		}
+		else{
+			lversion="error";			
+			logger.error("VirtualEJB.getandRemoveLyricfromFacade() --> User doesn't have a lyric connected to the music "+music.getNomemusica()+"Lversion="+lversion);
+		}
+		
+		return lversion;
+	}
+	
 	public String getLyricfromFacade(MusicEntity music, UserEntity user){
 		String lversion="";
 		lyricentity=lyricFacade.existUserLyricText(music, user);
