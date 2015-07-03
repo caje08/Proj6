@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name="usernumber")
+@XmlRootElement(name="count")
 public class NumberREST {
 	
 	@XmlElement(name="number")
