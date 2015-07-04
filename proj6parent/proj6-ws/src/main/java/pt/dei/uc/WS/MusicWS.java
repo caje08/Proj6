@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -25,6 +26,9 @@ import dei.uc.pt.ar.paj.ejb.UserEJB;
 import dei.uc.pt.ar.paj.ejb.UserEJBLocal;
 import dei.uc.pt.ar.paj.ejb.VirtualEJB;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @Stateless
 @Path("/song-mgmt")
@@ -38,6 +42,8 @@ public class MusicWS {
 	
 	@Inject
 	private VirtualEJB virtualejb;
+	
+	static Logger logger = LoggerFactory.getLogger(MusicWS.class);
 
 	public MusicWS() {
 		
@@ -59,21 +65,38 @@ public class MusicWS {
 	@Path("/all")
 	@Produces("application/xml")
 	public Response getAllSongs(){
-		List<MusicEntity> music = musicejb.getMusicas();
-		List <MusicREST> musicREST = ConverterEntityToWS.convertMusicEntityToMusicWS(music);
-		MusicsREST musicsrest = new MusicsREST();
-		musicsrest.setMusics(musicREST);
-		return Response.status(200).entity(musicsrest).build();	
+		try {
+			List<MusicEntity> music = musicejb.getMusicas();
+			List <MusicREST> musicREST = ConverterEntityToWS.convertMusicEntityToMusicWS(music);
+			MusicsREST musicsrest = new MusicsREST();
+			musicsrest.setMusics(musicREST);
+			return Response.status(200).entity(musicsrest).build();
+		} catch (NullPointerException e) {
+			logger.info("No music found!");
+			return Response.status(200).build();
+		}	
 	}
 	
 	@GET
 	@Path("/infosong/{songid: \\d+}")
 	@Produces("application/xml")
 	public Response getSongInfo(@PathParam("songid") int id){
-		MusicEntity music = musicejb.getMusicByID(id);
-		MusicREST song = ConverterEntityToWS.convertMusicEntityToMusicWS(music);
-		
-		return Response.status(200).entity(song).build();
+		try {
+			MusicEntity music;			
+			try {
+				music = musicejb.getMusicByID(id);
+			} catch ( NoResultException e) {
+				logger.info("No song found with that ID!");
+				return Response.status(200).build();
+				
+			}		
+			
+			MusicREST song = ConverterEntityToWS.convertMusicEntityToMusicWS(music);			
+			return Response.status(200).entity(song).build();
+		} catch (NullPointerException | NoResultException e) {
+			
+			return Response.status(304).build();
+		}
 	}
 	
 	@GET
@@ -81,8 +104,9 @@ public class MusicWS {
 	@Produces("application/xml")
 	public Response getUserSongs(@PathParam("userid") long id){
 		
-		UserEntity user = userejb.findById(id);		
+		UserEntity user;
 		
+		user = userejb.findById(id);		
 		List<MusicREST> songs = ConverterEntityToWS.convertMusicEntityToMusicWS(musicejb.findOrdered(MusicEntity.Ordering.FIND_BY_OWNER_ORDER_BY_NOME_ASC, user)) ;
 		
 		MusicsREST songslist = new MusicsREST();

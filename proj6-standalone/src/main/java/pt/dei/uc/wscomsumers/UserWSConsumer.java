@@ -1,5 +1,7 @@
 package pt.dei.uc.wscomsumers;
 
+import java.net.ConnectException;
+
 import pt.dei.uc.RESTentities.*;
 
 import javax.persistence.NoResultException;
@@ -48,16 +50,24 @@ public class UserWSConsumer {
 	public static void getAllUsers() {		
 		
 		ResteasyClient client = new ResteasyClientBuilder().build();
+	
+		ResteasyWebTarget target;
 		
-		ResteasyWebTarget target = client
-				.target("http://localhost:9001/proj6-ws/rest/user-mgmt/all");
+		try {
+			target = client
+					.target("http://localhost:9001/proj6-ws/rest/user-mgmt/all");
+			
+			Response response = target.request().get();
 
-		Response response = target.request().get();
+			UsersREST usersrest = response.readEntity(UsersREST.class);
 
-		UsersREST usersrest = response.readEntity(UsersREST.class);
-
-		for (UserREST user : usersrest.getUsers()) {
-			user.getInfo();
+			for (UserREST user : usersrest.getUsers()) {
+				user.getInfo();
+			}
+		} catch (ProcessingException e) {
+			System.out.println("Could not connect to server!");			
+		} catch (NoResultException | NullPointerException e1){
+			System.out.println("No Users to show!");
 		}
 		
 		
@@ -80,7 +90,7 @@ public class UserWSConsumer {
 			
 			user.getInfo();
 		} catch (ProcessingException e) {
-			System.out.println("Could not connect retrieve information!");
+			System.out.println("Could not connect to server!");
 		}catch(NoResultException | NullPointerException e){
 			System.out.println("No result found!");
 		}
@@ -93,15 +103,27 @@ public class UserWSConsumer {
 		
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		
-		ResteasyWebTarget target = client
-				.target("http://localhost:9001/proj6-ws/rest/user-mgmt/loggedusersnumber");
-
-		Response response = target.request().get();
-		NumberREST usernumber = response.readEntity(NumberREST.class);
+		ResteasyWebTarget target;
 		
 		
-		System.out.println("The App has " + usernumber.getUsernumber()
-				+ " logged users.");
+		NumberREST usernumber;
+		try {
+			target = client
+					.target("http://localhost:9001/proj6-ws/rest/user-mgmt/loggedusersnumber");
+			Response response = target.request().get();
+			usernumber = response.readEntity(NumberREST.class);
+			
+			System.out.println("The App has " + usernumber.getUsernumber()
+					+ " logged users.");
+			
+		} catch (ProcessingException e) {
+			System.out.println("Could not connect to server!");
+		}catch(NoResultException | NullPointerException e){
+			System.out.println("No result found!");
+		}
+		
+		
+		
 		
 		
 	}
@@ -115,10 +137,16 @@ public class UserWSConsumer {
 
 		Response response = target.request().get();
 
-		UsersREST usersrest = response.readEntity(UsersREST.class);
+		try {
+			UsersREST usersrest = response.readEntity(UsersREST.class);
 
-		for (UserREST user : usersrest.getUsers()) {
-			user.getInfo();
+			for (UserREST user : usersrest.getUsers()) {
+				user.getInfo();
+			}
+		} catch (ProcessingException e) {
+			System.out.println("Could not connect to server!");
+		}catch(NoResultException | NullPointerException e){
+			System.out.println("No result found!");
 		}
 		
 		
@@ -143,7 +171,7 @@ public class UserWSConsumer {
 			
 			user.getInfo();
 		} catch (ProcessingException e) {
-			System.out.println("Could not connect retrieve information!");
+			System.out.println("Could not connect to server!");
 		}catch(NoResultException e){
 			System.out.println("No result found!");
 		}

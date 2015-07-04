@@ -7,14 +7,18 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+
+
+
 
 import pt.dei.uc.RESTentities.*;
 import pt.dei.uc.converter.*;
@@ -22,6 +26,9 @@ import dei.uc.pt.ar.paj.ejb.*;
 import dei.uc.pt.ar.paj.Entities.UserEntity;
 import dei.uc.pt.ar.paj.Facade.UserFacade;
 import dei.uc.pt.ar.paj.ejb.UserEJBLocal;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -39,6 +46,8 @@ public class UserWS {
 	@Inject 
 	private UserFacade userfacade;
 	
+	static Logger logger = LoggerFactory.getLogger(UserWS.class);
+	
 	public UserWS() {
 		
 	}
@@ -49,11 +58,19 @@ public class UserWS {
 	public Response getAllUsers()	
     {
 		
-		List<UserEntity> userlist = userejb.getUsers();		
-        List<UserREST> userlistREST = ConverterEntityToWS.convertUserEntityToUserWS(userlist);
-        UsersREST users = new UsersREST();
-        users.setUsers(userlistREST);
-        return Response.status(200).entity(users).build();
+		
+			try {
+				List<UserEntity> userlist = userejb.getUsers();		
+				List<UserREST> userlistREST = ConverterEntityToWS.convertUserEntityToUserWS(userlist);
+				UsersREST users = new UsersREST();
+				users.setUsers(userlistREST);
+				return Response.status(200).entity(users).build();
+			} catch (NullPointerException e) {
+				logger.info("No users!");
+				return Response.status(200).build();
+			}
+		
+        
     }
 	
 	@GET
@@ -74,10 +91,24 @@ public class UserWS {
     @Path("{id: \\d+}")
     @Produces("application/xml")
 	public Response getUserInfo(@PathParam("id") int id){
-		UserEntity user = userejb.findById(id);
-		UserREST userrest = ConverterEntityToWS.convertUserEntityToUserWS(user);
+		UserREST userrest;
+		try {
+			UserEntity user;
+			try {
+				user = userejb.findById(id);
+			} catch (Exception e) {
+				logger.info("No user found!");
+				return Response.status(200).build();
+			}
+			
+			userrest = ConverterEntityToWS.convertUserEntityToUserWS(user);
+			
+			return Response.status(200).entity(userrest).build();
+		} catch (NoResultException | NullPointerException e) {
+			return Response.status(500).build();
+		}
 		
-		return Response.status(200).entity(userrest).build();
+		
 	}
 	
 	@GET
@@ -93,12 +124,16 @@ public class UserWS {
 	@Path("/loggedusers")
 	@Produces("application/xml")
 	public Response getLoggedUsers(){
-		List<UserEntity> loggedusers = new ArrayList<UserEntity>();
-		loggedusers.addAll(UserEJB.getLoggedUsers().keySet());
-		List<UserREST> loggedusersREST = ConverterEntityToWS.convertUserEntityToUserWS(loggedusers);
-		UsersREST users = new UsersREST();
-        users.setUsers(loggedusersREST);
-        return Response.status(200).entity(users).build();
+		try {
+			List<UserEntity> loggedusers = new ArrayList<UserEntity>();
+			loggedusers.addAll(UserEJB.getLoggedUsers().keySet());
+			List<UserREST> loggedusersREST = ConverterEntityToWS.convertUserEntityToUserWS(loggedusers);
+			UsersREST users = new UsersREST();
+			users.setUsers(loggedusersREST);
+			return Response.status(200).entity(users).build();
+		} catch (NullPointerException e) {
+			return Response.status(304).build();
+		}
 	}
 	
 	@Path("/remove/{id: \\d+}")
@@ -132,7 +167,7 @@ public class UserWS {
 			return Response.notModified().build();
 		}
 		
-		return Response.status(200).build();		
+		return Response.status(200).entity(user).build();		
 	}
 	
 	@Path("/setpassword")

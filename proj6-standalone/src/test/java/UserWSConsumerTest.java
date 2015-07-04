@@ -24,7 +24,8 @@ public class UserWSConsumerTest {
 	
 	@Mock
 	NumberREST numberrest;
-
+	
+	
 	public UserWSConsumerTest() {
 		
 	}
@@ -61,7 +62,7 @@ public class UserWSConsumerTest {
 	            // if response body is empty then fail test
 	            result = false;
 	        }
-	        if()
+	       
 	        conn.disconnect();
 	    } catch (IOException e) {
 	        // if MalformedURLException, ConnectException, etc. then fail test
@@ -105,40 +106,6 @@ public class UserWSConsumerTest {
 	    assertEquals(expResult, result);
 	}
 	
-	@Test
-	public void testUserInfo() {
-	    String responseBody = "";
-	    String output;
-	    Boolean result = true;
-	    Boolean expResult = true;
-	 
-	    try {
-	        URL url = new URL("http://localhost:9001/proj6-ws/rest/user-mgmt/");
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setRequestMethod("GET");
-//	        conn.setRequestProperty("Authorization", "Bearer " + getJwt());
-	        conn.setRequestProperty("Accept", "application/xml");
-	 
-	        if (conn.getResponseCode() != 200) {
-	            // if not 200 response code then fail test
-	            result = false;
-	        }
-	        BufferedReader br = new BufferedReader(new InputStreamReader(
-	                (conn.getInputStream())));
-	        while ((output = br.readLine()) != null) {
-	            responseBody = output;
-	        }
-	        if (responseBody.length() < 1) {
-	            // if response body is empty then fail test
-	            result = false;
-	        }
-	        conn.disconnect();
-	    } catch (IOException e) {
-	        // if MalformedURLException, ConnectException, etc. then fail test
-	        result = false;
-	    }
-	    assertEquals(expResult, result);
-	}
 	
 	
 

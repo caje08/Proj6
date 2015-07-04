@@ -1,5 +1,6 @@
 package pt.dei.uc.mainApp;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import pt.dei.uc.wscomsumers.*;
@@ -19,22 +20,27 @@ public class StandaloneApp {
 			System.out.println("Song Management - 3");
 			System.out.println("Exit - 4");
 
-			switch (sc.nextInt()) {
+			try {
+				switch (sc.nextInt()) {
 
-			case 1:
-				userManagement();
+				case 1:
+					userManagement();
+					break;
+
+				case 2:
+					playlistManagement();
+					break;
+
+				case 3:
+					songManagement();
+					break;
+				case 4:
+
+					exitcondition = -1;
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Wrong Input!");
 				break;
-
-			case 2:
-				playlistManagement();
-				break;
-
-			case 3:
-				songManagement();
-				break;
-			case 4:
-
-				exitcondition = -1;
 			}
 
 		}

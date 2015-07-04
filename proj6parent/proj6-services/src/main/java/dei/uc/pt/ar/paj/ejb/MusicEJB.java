@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -233,7 +234,7 @@ public class MusicEJB implements MusicEJBLocal {
 		return q.getResultList();
 	}
 	
-	public MusicEntity getMusicByID(long id){
+	public MusicEntity getMusicByID(long id) throws NoResultException{
 		TypedQuery<MusicEntity> q;
 		q = em.createNamedQuery("Music.findByID", MusicEntity.class);
 		q.setParameter("musicid", id);

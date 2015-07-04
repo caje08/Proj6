@@ -24,6 +24,9 @@ import dei.uc.pt.ar.paj.ejb.PlaylistEJBLocal;
 import dei.uc.pt.ar.paj.ejb.UserEJBLocal;
 import dei.uc.pt.ar.paj.ejb.VirtualEJB;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @Stateless
 @Path("/playlist-mgmt")
@@ -39,6 +42,9 @@ public class PlaylistWS {
 	private UserEJBLocal userejb;
 	
 	@EJB PlaylistEJBLocal playlistejb;
+	
+	static Logger logger = LoggerFactory.getLogger(UserWS.class);
+	
 	public PlaylistWS() {
 		
 	}
@@ -60,34 +66,50 @@ public class PlaylistWS {
     @Path("/all")
     @Produces("application/xml")
 	public Response getAllPlaylists(){
-		PlaylistsREST allplaylists = new PlaylistsREST();
-		List<PlaylistEntity> playlists = playlistejb.getPlaylists();
-		List<PlaylistREST> playlistsREST = ConverterEntityToWS.convertPlaylistEntityToPlaylistWS(playlists);
-		allplaylists.setPlaylists(playlistsREST);
-		return Response.status(200).entity(allplaylists).build();		
+		try {
+			PlaylistsREST allplaylists = new PlaylistsREST();
+			List<PlaylistEntity> playlists = playlistejb.getPlaylists();
+			List<PlaylistREST> playlistsREST = ConverterEntityToWS.convertPlaylistEntityToPlaylistWS(playlists);
+			allplaylists.setPlaylists(playlistsREST);
+			return Response.status(200).entity(allplaylists).build();
+		} catch (NullPointerException e) {
+			return Response.status(200).build();
+		}		
 	}
 	
 	@GET
     @Path("/songs/playlist/{id: \\d+}")
     @Produces("application/xml")
 	public Response getSongsFromPlaylist(@PathParam("id") int id){
-		PlaylistsREST allplaylists = new PlaylistsREST();
-		List<PlaylistEntity> playlists = playlistejb.getPlaylists();
-		List<PlaylistREST> playlistsREST = ConverterEntityToWS.convertPlaylistEntityToPlaylistWS(playlists);
-		allplaylists.setPlaylists(playlistsREST);
-		
-		PlaylistREST requestedplaylist = new PlaylistREST();
-		requestedplaylist = null;
-		for(PlaylistREST play : playlistsREST){
-			if(id==play.getIdplaylist()){
-				requestedplaylist = play;
-			}
+		try {
+			
+				PlaylistsREST allplaylists = new PlaylistsREST();
+				List<PlaylistEntity> playlists;
+				try {
+					playlists = playlistejb.getPlaylists();
+				} catch (Exception e) {
+					logger.info("Playlist not found");
+					return Response.status(200).build();
+				}
+				List<PlaylistREST> playlistsREST = ConverterEntityToWS.convertPlaylistEntityToPlaylistWS(playlists);
+				allplaylists.setPlaylists(playlistsREST);
+				
+				PlaylistREST requestedplaylist = new PlaylistREST();
+				requestedplaylist = null;
+				for(PlaylistREST play : playlistsREST){
+					if(id==play.getIdplaylist()){
+						requestedplaylist = play;
+					}
+				}
+				List<MusicREST> songs = requestedplaylist.getSongs();
+				MusicsREST songsfromplaylist = new MusicsREST();
+				songsfromplaylist.setMusics(songs);
+				
+				return Response.status(200).entity(songsfromplaylist).build();
+			
+		} catch (NullPointerException e) {
+			return Response.status(200).build();
 		}
-		List<MusicREST> songs = requestedplaylist.getSongs();
-		MusicsREST songsfromplaylist = new MusicsREST();
-		songsfromplaylist.setMusics(songs);
-		
-		return Response.status(200).entity(songsfromplaylist).build();
 		
 	}
 	
