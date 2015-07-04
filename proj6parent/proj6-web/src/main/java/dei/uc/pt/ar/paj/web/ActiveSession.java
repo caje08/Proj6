@@ -128,6 +128,7 @@ public class ActiveSession implements Serializable {
 	private boolean sessionLoggedIn;
 	private boolean isSearch;
 	private String mensagem;
+	private int op;
 
 	private MusicEntity musicToUploadFile;
 
@@ -146,6 +147,7 @@ public class ActiveSession implements Serializable {
 		this.render.setUploadMusic(false);
 
 		this.activeUser = user;
+		this.op = 0;
 
 		this.backupEmail = this.activeUser.getEmail();
 
@@ -154,7 +156,7 @@ public class ActiveSession implements Serializable {
 		this.activeUser.setUserplaylists(userPlaylists);
 		this.sessionLoggedIn = true;
 		this.mensagem = "";
-		
+
 		UserEJB.increaseUserCount(activeUser);
 	}
 
@@ -221,7 +223,7 @@ public class ActiveSession implements Serializable {
 	}
 
 	public String getShowmylyric() {
-		showmylyric = showMyLyricVersion();
+		showmylyric = showMyLyricVersion(op);
 		return showmylyric;
 	}
 
@@ -230,8 +232,11 @@ public class ActiveSession implements Serializable {
 	}
 
 	public String getShowrestwikia() {
-		showmylyric = showRestWikia();
-		return showmylyric;
+		this.showrestwikia = "restw";
+		this.op = 1;
+		getShowmylyric();
+		// showmylyric = showRestWikia();
+		return this.showrestwikia;
 	}
 
 	public void setShowrestwikia(String showrestwikia) {
@@ -239,8 +244,10 @@ public class ActiveSession implements Serializable {
 	}
 
 	public String getShowrestchartlyrics() {
-		showmylyric = showRestChartlyrics();
-		return showmylyric;
+		this.op = 2;
+		this.showrestchartlyrics = "restchart";
+		// showmylyric = showRestChartlyrics();
+		return this.showrestchartlyrics;
 	}
 
 	public void setShowrestchartlyrics(String showrestchartlyrics) {
@@ -248,60 +255,84 @@ public class ActiveSession implements Serializable {
 	}
 
 	public String getShowsoapchartlyrics() {
-		showmylyric = showSoapChartlyrics();
-		return showmylyric;
+		this.op = 3;
+		this.showsoapchartlyrics = "soapchart";
+		// showmylyric = showSoapChartlyrics();
+		return this.showsoapchartlyrics;
 	}
 
 	public void setShowsoapchartlyrics(String showsoapchartlyrics) {
 		this.showsoapchartlyrics = showsoapchartlyrics;
 	}
 
+	public void showandrestwikia() {
+		this.op = 1;
+	}
+
+	public void showandrestchartlyrics() {
+		this.op = 2;
+	}
+
+	public void showandsoapchartlyrics() {
+		this.op = 3;
+	}
+
 	public String showRestWikia() {
-		String txt="";
+		String txt = "";
 		try {
-			txt = webservicecontrol.getAgainLyricsMusic(this.activeMusic,0);
+			txt = webservicecontrol.getAgainLyricsMusic(this.activeMusic, 0);
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			logger.error("Lyric not found in getShowRestWikia() for music name= "+this.activeMusic.getNomemusica());
-			txt="Lyric not Found by REST in lyrics.wikia.com";
+			// e.printStackTrace();
+			logger.error("Lyric not found in by REST in lyrics.wikia.com getShowRestWikia() for music name= "
+					+ this.activeMusic.getNomemusica());
+			txt = "Lyric not Found by REST in lyrics.wikia.com";
+			txt="error";
 		}
 		showmylyric = txt;
-		logger.info("Lyric found in getShowRestWikia() for music name= "+this.activeMusic.getNomemusica()+", showmylyric="+showmylyric);
+		logger.info("Lyric found in getShowRestWikia() for music name= "
+				+ this.activeMusic.getNomemusica() + ", showmylyric="
+				+ showmylyric);
 		return txt;
 	}
 
 	public String showRestChartlyrics() {
-		String txt="";
+		String txt = "";
 		try {
-			txt = webservicecontrol.getAgainLyricsMusic(this.activeMusic,1);
+			txt = webservicecontrol.getAgainLyricsMusic(this.activeMusic, 1);
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			logger.error("Lyric not found in getShowRestChartlyrics() for music name= "+this.activeMusic.getNomemusica());
-			txt="Lyric not Found by REST in chartlyrics.com";
+			// e.printStackTrace();
+			logger.error("Lyric not found by REST in chartlyrics.com in getShowRestChartlyrics() for music name= "
+					+ this.activeMusic.getNomemusica());
+			txt = "Lyric not Found by REST in chartlyrics.com";
+			txt="error";
 		}
 		showmylyric = txt;
-		logger.info("Lyric found in getShowRestWikia() for music name= "+this.activeMusic.getNomemusica()+", showmylyric="+showmylyric);
+		logger.info("Lyric found in getShowRestWikia() for music name= "
+				+ this.activeMusic.getNomemusica() + ", showmylyric="
+				+ showmylyric);
 		return txt;
 	}
-
 
 	public String showSoapChartlyrics() {
-		String txt="";
+		String txt = "";
 		try {
-			txt = webservicecontrol.getAgainLyricsMusic(this.activeMusic,2);
+			txt = webservicecontrol.getAgainLyricsMusic(this.activeMusic, 2);
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			logger.error("Lyric not found in getShowSoapChartlyrics() for music name= "+this.activeMusic.getNomemusica());
-			txt="Lyric not Found by SOAP in chartlyrics.com";
+			// e.printStackTrace();
+			logger.error("Lyric not found by SOAP in Chartlyrics.com in getShowSoapChartlyrics() for music name= "
+					+ this.activeMusic.getNomemusica());
+			txt = "Lyric not Found by SOAP in chartlyrics.com";
+			txt="error";
 		}
 		showmylyric = txt;
-		logger.info("Lyric found in getShowRestWikia() for music name= "+this.activeMusic.getNomemusica()+", showmylyric="+showmylyric);
+		logger.info("Lyric found in getShowRestWikia() for music name= "
+				+ this.activeMusic.getNomemusica() + ", showmylyric="
+				+ showmylyric);
 		return txt;
 	}
-
 
 	public void setGetMusicsByUser(boolean getMusicsByUser) {
 		this.getMusicsByUser = getMusicsByUser;
@@ -334,16 +365,36 @@ public class ActiveSession implements Serializable {
 		this.activeMusic = activeMusic;
 	}
 
-	public String showMyLyricVersion() {
+	public String showMyLyricVersion(int op) {
 		String lyrictxt = "";
 
-		lyrictxt = ejb.getLyricfromFacade(activeMusic, activeUser);
-		logger.info("Em ActiveSession.getMyLyricVersion() Lyrictxt=" + lyrictxt);
+		switch (op) {
+		case 0: {
+			lyrictxt = ejb.getLyricfromFacade(activeMusic, activeUser);			
+			break;
+		}
+		case 1:
+			lyrictxt = showRestWikia();
+			break;
+		case 2:
+			lyrictxt = showRestChartlyrics();
+			break;
+		case 3:
+			lyrictxt = showSoapChartlyrics();
+			break;
+		default:
+			break;
+		}
+		logger.info("Em ActiveSession.getMyLyricVersion() Lyrictxt="
+				+ lyrictxt);
 		if (lyrictxt.equals("error")) {
 			lyrictxt = activeMusic.getOriginalLyric();
 			createnewlyricDB = true;
-		} else
+		} else if (!lyrictxt.equals("error") && !activeMusic.isLyricExist()) {
+			createnewlyricDB = true;
+		}else {
 			createnewlyricDB = false;
+		}
 		this.showmylyric = lyrictxt;
 		return lyrictxt;
 	}
@@ -480,7 +531,7 @@ public class ActiveSession implements Serializable {
 	}
 
 	public void deleteUser() {
-		String lyrictxt="";
+		String lyrictxt = "";
 		this.activePlayList = null;
 		this.editPlayList.setPlayListToEdit(null);
 
@@ -503,22 +554,23 @@ public class ActiveSession implements Serializable {
 		UserEntity admin = userFacade.findByEmailPass("admin@admin",
 				"jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=");
 
-		//Remover Lyrics
-		int nreg=ejb.deleteLyricsfromUser(activeUser);
-		logger.info("Em ActiveSession.deleteUser() were deleted nreg="+ nreg+", from LyricEntity related to userID="+activeUser.getUserId());
-				
+		// Remover Lyrics
+		int nreg = ejb.deleteLyricsfromUser(activeUser);
+		logger.info("Em ActiveSession.deleteUser() were deleted nreg=" + nreg
+				+ ", from LyricEntity related to userID="
+				+ activeUser.getUserId());
+
 		// Desassocia as Músicas
-		for (MusicEntity m : musics) {		
+		for (MusicEntity m : musics) {
 			m.setUtilizador(admin);
 			this.ejb.update(m);
 		}
-		
-				
+
 		// Faz logout e Remove o User sem PlayLists e sem Músicas e sem Lyrics
 		UserEntity tmpuser = this.activeUser;
 		logout();
 		this.ejb.remove(tmpuser);
-		//logout();
+		// logout();
 	}
 
 	// User Edits End
@@ -542,14 +594,14 @@ public class ActiveSession implements Serializable {
 		this.render.setEditPlayList(false);
 		if (this.editMusic.editThisLyric(music, this.activeUser)) {
 			this.activeMusic = music;
-			if (i == 1 || i== 0) 
+			if (i == 1 || i == 0)
 				this.render.setEditLyric(true);
 			else
 				this.render.setReadLyric(true);
-		} else if(i==0 || i==1){
+		} else if (i == 0 || i == 1) {
 			this.activeMusic = music;
 			this.render.setEditLyric(true);
-		} else{
+		} else {
 			this.render.setEditLyric(false);
 			this.render.setReadLyric(false);
 		}
@@ -562,15 +614,21 @@ public class ActiveSession implements Serializable {
 	}
 
 	public void saveLyricMusicChanges() {
-
+		String lyrictxt="";
+		
 		this.render.setEditLyric(false);
 		// BD
 		logger.info("activeUser em ActiveSession.saveLyricMusicChanges() = "
-				+ this.activeUser.toString());
+				+ this.activeUser.getName());
 		logger.info("activeMusic em ActiveSession.saveLyricMusicChanges() = "
-				+ this.activeMusic.toString());
+				+ this.activeMusic.getNomemusica());
+		lyrictxt = ejb.getLyricfromFacade(activeMusic, activeUser);	
+		if(lyrictxt.equals("error")){
+			createnewlyricDB=true;
+		}else
+			createnewlyricDB=false;
 		this.ejb.updateLyric(this.editMusic.saveLyricChanges(activeMusic),
-				this.activeUser, createnewlyricDB, showmylyric);
+		                     this.activeUser, createnewlyricDB, showmylyric);
 		this.render.setEditPlayList(true);
 	}
 
@@ -639,9 +697,11 @@ public class ActiveSession implements Serializable {
 			logger.info("MusicID depois de persistir na BD = "
 					+ music.getMusicid());
 			textlyric = webservicecontrol.getLyricsMusicExists(music);
-			logger.info("EM newMusicEnd() a textlyric encontrada = " + textlyric);
+			logger.info("EM newMusicEnd() a textlyric encontrada = "
+					+ textlyric);
 			if (textlyric != null && textlyric != ""
-					&& !textlyric.equals("Not found") && !textlyric.equals("Not Found")) {
+					&& !textlyric.equals("Not found")
+					&& !textlyric.equals("Not Found")) {
 				logger.info("Antes de criar a entidade Lyric em ActiveSession.newMusicEnd()");
 				LyricEntityId id = new LyricEntityId(music.getMusicid(),
 						activeUser.getUserId());
@@ -656,7 +716,8 @@ public class ActiveSession implements Serializable {
 				music.setOriginalLyric(textlyric);
 				music.setMylyricversion(textlyric);
 
-				logger.info("Lyric found for Music Name = ", music.getNomemusica());
+				logger.info("Lyric found for Music Name = ",
+						music.getNomemusica());
 				logger.info("Lyric created with text = " + textlyric);
 				this.ejb.addLyric(lyric, true);
 				updateMusic(music);
@@ -667,16 +728,16 @@ public class ActiveSession implements Serializable {
 			this.render.setEditPlayList(false);
 			this.render.setEditLyric(false);
 			this.render.setNewMusic(false);
-			mensagem="";
-		}else{
-			mensagem="All music fields must be filled up before saving a new music!";
+			mensagem = "";
+		} else {
+			mensagem = "All music fields must be filled up before saving a new music!";
 		}
 	}
 
 	public void newMusicCancel() {
 		this.render.setNewMusic(false);
 		this.render.setUploadMusic(false);
-		this.mensagem="";
+		this.mensagem = "";
 	}
 
 	// Envia o ficheiro para uma pasta do servidor
@@ -788,13 +849,13 @@ public class ActiveSession implements Serializable {
 		this.render.setEditLyric(false);
 		this.render.setAddMusicToPlayList(false);
 		this.userPlaylists = this.ejb.getPlayLists(this.activeUser, 0);
-		this.search="";
+		this.search = "";
 	}
 
 	// Remove music from Playlist
 	public void removeMusicFromPlayList(MusicEntity music) {
 		String lyrictxt = "";
-		
+
 		this.editPlayList.removeMusicFromPlayList(music);
 		this.ejb.update(this.activePlayList);
 		this.userPlaylists = this.ejb.getPlayLists(this.activeUser, 0);
@@ -919,14 +980,14 @@ public class ActiveSession implements Serializable {
 
 	// In�cio e Fim da sess�o http
 	public void startSession() {
-		
+
 		this.session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		this.session.setAttribute("sessionLoggedIn", true);
 	}
 
 	public void endSession() {
-		
+
 		if (this.session != null)
 			this.session.invalidate();
 

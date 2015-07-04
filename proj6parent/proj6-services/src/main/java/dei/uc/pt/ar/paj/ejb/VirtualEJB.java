@@ -324,10 +324,11 @@ public class VirtualEJB implements Serializable {
 	
 	public String getLyricfromFacade(MusicEntity music, UserEntity user){
 		String lversion="";
+		
 		lyricentity=lyricFacade.existUserLyricText(music, user);
 		
 		if(lyricentity!=null){
-			logger.info("Em VirtualEJB.getLyricfromFacade() lyricentity="+lyricentity.toString());
+			logger.info("Em VirtualEJB.getLyricfromFacade() lyricentity userID="+lyricentity.getUserid());
 		  lversion=lyricentity.getTextLyric();
 		  logger.info("VirtualEJB.getLyricfromFacade() for User = "+user.getName()+" and Music= "+music.getNomemusica()+"shows Lyric Version="+lversion);
 		}

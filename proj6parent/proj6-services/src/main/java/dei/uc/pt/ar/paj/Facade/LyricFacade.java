@@ -66,14 +66,19 @@ public class LyricFacade extends AbstractFacade<LyricEntity> {
 	public LyricEntity existUserLyricText(MusicEntity music, UserEntity utilizador) {
 		TypedQuery<LyricEntity> q;
 		LyricEntity saida;
-		q = em.createNamedQuery("Lyric.findLyricByMusic&User",
-				LyricEntity.class);
+		
+		q = em.createNamedQuery("Lyric.findLyricByMusic&User", LyricEntity.class);
+		
 		try {
 			logger.info("LyricFacade.existUserLyricText() - Search user textLyric for userid="+utilizador.getUserId()+", musicid="+music.getMusicid());
+			
 			q.setParameter("musicid", music.getMusicid()).setParameter("userid", utilizador.getUserId());
 			saida=q.getSingleResult();
+			
 			logger.info("LyricFacade.existUserLyricText() produced LyricEntity.textLyric="+saida.getTextLyric());
+			
 		} catch (Exception e) {
+			
 			System.out.println("LyricFacade.existUserLyricText() - User doesn't have costumized Lyric: "+e.getMessage());
 			logger.error("LyricFacade.existUserLyricText() - User doesn't have costumized Lyric: "+e.getMessage());
 			return null;
