@@ -170,18 +170,20 @@ public class EditMusic implements Serializable {
 				this.musicMyLyricVersion = this.musicOriginalLyric;
 			this.music = music;
 			return true;
-		} else{
+		} else {
 			this.lyricowner = false;
 
 			try {
 				musicMyLyricVersion = lirycontrol.prepareEdit(music, user);
-				System.out.println("EditMusic.editThisLyric() got MusicMyLyricVersion = "
-						+ musicMyLyricVersion);
+				System.out
+						.println("EditMusic.editThisLyric() got MusicMyLyricVersion = "
+								+ musicMyLyricVersion);
 			} catch (Exception e) {
 				logger.error("Error at EditMusic.editThisLyric() running lirycontrol.prepareEdit(music, user)"
 						+ e.getMessage());
-				System.out.println("Error at EditMusic.editThisLyric() running lirycontrol.prepareEdit(music, user)"
-						+ e.getMessage());
+				System.out
+						.println("Error at EditMusic.editThisLyric() running lirycontrol.prepareEdit(music, user)"
+								+ e.getMessage());
 				musicMyLyricVersion = "";
 				this.newName = music.getNomemusica();
 				this.newArtist = music.getInterprete();
@@ -193,20 +195,22 @@ public class EditMusic implements Serializable {
 			this.newName = music.getNomemusica();
 			this.newArtist = music.getInterprete();
 			this.newAlbum = music.getAlbum();
-			
+
 			if (music.isLyricExist()) {
-			  this.musicOriginalLyric = music.getOriginalLyric();
-			
+				this.musicOriginalLyric = music.getOriginalLyric();
+
 			}
 			// this.musicMyLyricVersion=lyricentity.getTextLyric();
 			if ((this.musicMyLyricVersion == null || this.musicMyLyricVersion == "")
 					&& this.musicOriginalLyric.length() > 0) {
 				this.musicMyLyricVersion = this.musicOriginalLyric;
-				System.out.println("EditMusic.editThisLyric() --> musicOriginalLyric="
-						+ this.musicOriginalLyric);
-				System.out.println("EditMusic.editThisLyric() --> musicMyLyricVersion="
-						+ this.musicMyLyricVersion);
-				
+				System.out
+						.println("EditMusic.editThisLyric() --> musicOriginalLyric="
+								+ this.musicOriginalLyric);
+				System.out
+						.println("EditMusic.editThisLyric() --> musicMyLyricVersion="
+								+ this.musicMyLyricVersion);
+
 			}
 			this.music = music;
 			return true;
@@ -225,7 +229,14 @@ public class EditMusic implements Serializable {
 	}
 
 	public MusicEntity saveLyricChanges(MusicEntity music) {
-
+		if (!this.music.isLyricExist()
+				&& (music.getMylyricversion() != null
+						&& music.getMylyricversion() != ""
+						&& music.getMylyricversion() != "Not found" && music
+						.getMylyricversion() != "Not Found")) {
+			this.music.setLyricExist(true);
+			this.music.setOriginalLyric(music.getMylyricversion());
+		}
 		this.music.setMylyricversion(music.getMylyricversion());
 		this.music.setChangeoriginal(true);
 		return this.music;

@@ -149,12 +149,28 @@
 			<br />
 			<table>
 				<tr>
+					<td></td>
+					<td></td>
+					<td><label>Finding Better Lyrics :</label></td>
+				</tr>
+				<tr>
 					<td><label>MyLyric Version :</label></td>
 
 					<td><h:inputTextarea id="myLy" styleClass="inputbox"
 							value="#{activeSession.showmylyric}" /></td>
+
+
+					<td style="display: block; padding-top: 50px"><h:commandButton
+							action="#{activeSession.showandrestwikia()}" value="REST wikia.com" /></td>
+					<td style="display: block;padding-top: 15px"><h:commandButton
+							action="#{activeSession.showandrestchartlyrics()}"
+							value="REST Chartlyrics" /></td>
+					<td style="display: block;padding-top: 15px"><h:commandButton
+							action="#{activeSession.showandsoapchartlyrics()}"
+							value="SOAP Chartlyrics" /></td>
+
 				</tr>
-				
+
 			</table>
 			<table>
 				<tr></tr>
